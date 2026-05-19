@@ -1,0 +1,640 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>MagmaMath Question Tagger</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,400&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet"/>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+
+:root{
+  --bg:#0f0f0e;
+  --surface:#1a1a18;
+  --surface2:#222220;
+  --surface3:#2a2a27;
+  --border:rgba(255,255,255,0.08);
+  --border-mid:rgba(255,255,255,0.14);
+  --border-strong:rgba(255,255,255,0.22);
+  --text:#f0efe9;
+  --text-2:#a8a79f;
+  --text-3:#6a6a62;
+  --ku:#378ADD;--ku-bg:#0c2a44;--ku-text:#85B7EB;
+  --ap:#639922;--ap-bg:#172c08;--ap-text:#97C459;
+  --th:#7F77DD;--th-bg:#1e1c44;--th-text:#AFA9EC;
+  --warn:#EF9F27;--warn-bg:#2a1e06;--warn-text:#FAC775;
+  --err:#E24B4A;--err-bg:#2a0c0c;--err-text:#F09595;
+  --ok:#1D9E75;--ok-bg:#082a1e;--ok-text:#5DCAA5;
+  --accent:#FF6B35;
+  --radius:10px;
+  --font:'DM Sans',system-ui,sans-serif;
+  --mono:'DM Mono',monospace;
+}
+
+body{font-family:var(--font);background:var(--bg);color:var(--text);min-height:100vh;font-size:15px;line-height:1.6}
+
+/* Layout */
+.app{max-width:960px;margin:0 auto;padding:32px 24px 80px}
+
+/* Header */
+.header{display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:36px;gap:16px;flex-wrap:wrap}
+.header-left h1{font-size:26px;font-weight:600;letter-spacing:-0.5px;color:var(--text)}
+.header-left p{color:var(--text-2);font-size:14px;margin-top:4px}
+.logo-badge{background:var(--accent);color:#fff;font-size:11px;font-weight:600;letter-spacing:1.5px;padding:6px 14px;border-radius:20px;white-space:nowrap;align-self:flex-start}
+
+/* Credential cards */
+.creds{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:28px}
+@media(max-width:600px){.creds{grid-template-columns:1fr}}
+.cred-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:16px}
+.cred-label{font-size:11px;font-weight:600;letter-spacing:1px;color:var(--warn);margin-bottom:10px;display:flex;align-items:center;gap:6px}
+.cred-label i{font-size:13px}
+.cred-input{width:100%;background:var(--surface2);border:1px solid var(--border-mid);border-radius:7px;color:var(--text);font-family:var(--mono);font-size:12px;padding:10px 12px;outline:none;transition:border-color .2s}
+.cred-input:focus{border-color:var(--border-strong)}
+.cred-input::placeholder{color:var(--text-3)}
+.cred-hint{font-size:12px;color:var(--text-3);margin-top:7px;line-height:1.5}
+.cred-saved{font-size:11px;color:var(--ok-text);margin-top:6px;display:none;align-items:center;gap:4px}
+.cred-saved.show{display:flex}
+
+/* Tabs */
+.tabs{display:flex;gap:4px;background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:4px;margin-bottom:24px;width:fit-content}
+.tab{padding:9px 20px;border-radius:7px;font-size:14px;font-weight:500;cursor:pointer;border:none;background:transparent;color:var(--text-2);transition:all .18s}
+.tab.active{background:var(--surface3);color:var(--text);border:1px solid var(--border-mid)}
+.tab:hover:not(.active){color:var(--text)}
+
+/* Panel */
+.panel{display:none}
+.panel.active{display:block}
+
+/* Section card */
+.section-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:22px;margin-bottom:20px}
+.section-card h3{font-size:13px;font-weight:600;letter-spacing:.8px;color:var(--text-2);text-transform:uppercase;margin-bottom:14px}
+
+/* Input row */
+.input-row{display:flex;gap:10px;align-items:flex-start;flex-wrap:wrap}
+.input-field{flex:1;min-width:200px;background:var(--surface2);border:1px solid var(--border-mid);border-radius:7px;color:var(--text);font-family:var(--mono);font-size:13px;padding:11px 14px;outline:none;transition:border-color .2s}
+.input-field:focus{border-color:var(--border-strong)}
+.input-field::placeholder{color:var(--text-3)}
+.input-hint{font-size:12px;color:var(--text-3);margin-top:8px;line-height:1.5}
+
+/* Buttons */
+.btn{display:inline-flex;align-items:center;gap:8px;padding:11px 20px;border-radius:8px;font-size:14px;font-weight:500;cursor:pointer;border:none;transition:all .18s;white-space:nowrap}
+.btn-primary{background:var(--text);color:var(--bg)}
+.btn-primary:hover{opacity:.88}
+.btn-primary:disabled{opacity:.35;cursor:not-allowed}
+.btn-secondary{background:var(--surface2);color:var(--text);border:1px solid var(--border-mid)}
+.btn-secondary:hover:not(:disabled){border-color:var(--border-strong)}
+.btn-secondary:disabled{opacity:.4;cursor:not-allowed}
+.btn-sm{padding:7px 14px;font-size:13px}
+
+/* Progress */
+.progress-wrap{margin-top:16px;display:none}
+.progress-wrap.show{display:block}
+.progress-bar-track{background:var(--surface2);border-radius:99px;height:5px;overflow:hidden;margin-bottom:8px}
+.progress-bar-fill{height:100%;background:var(--accent);border-radius:99px;transition:width .3s ease;width:0%}
+.progress-text{font-size:12px;color:var(--text-2)}
+
+/* Alert */
+.alert{border-radius:8px;padding:12px 16px;font-size:13px;margin-bottom:16px;display:none;align-items:flex-start;gap:8px;line-height:1.5}
+.alert.show{display:flex}
+.alert-warn{background:var(--warn-bg);color:var(--warn-text);border:1px solid rgba(239,159,39,.2)}
+.alert-err{background:var(--err-bg);color:var(--err-text);border:1px solid rgba(226,75,74,.2)}
+.alert-ok{background:var(--ok-bg);color:var(--ok-text);border:1px solid rgba(29,158,117,.2)}
+
+/* Results */
+.results-header{display:flex;align-items:center;justify-content:space-between;margin:24px 0 14px;flex-wrap:wrap;gap:10px}
+.results-header h3{font-size:16px;font-weight:600}
+.results-actions{display:flex;gap:8px}
+
+/* Stats bar */
+.stats-bar{display:flex;gap:10px;margin-bottom:16px;flex-wrap:wrap}
+.stat-pill{display:flex;align-items:center;gap:6px;padding:6px 12px;border-radius:20px;font-size:13px;font-weight:500}
+.stat-ku{background:var(--ku-bg);color:var(--ku-text)}
+.stat-ap{background:var(--ap-bg);color:var(--ap-text)}
+.stat-th{background:var(--th-bg);color:var(--th-text)}
+.stat-warn{background:var(--warn-bg);color:var(--warn-text)}
+
+/* Results table */
+.results-table-wrap{border:1px solid var(--border);border-radius:var(--radius);overflow:hidden}
+.results-table{width:100%;border-collapse:collapse;font-size:13px}
+.results-table th{background:var(--surface);padding:10px 14px;text-align:left;font-size:11px;font-weight:600;letter-spacing:.8px;color:var(--text-2);text-transform:uppercase;border-bottom:1px solid var(--border)}
+.results-table td{padding:12px 14px;border-bottom:1px solid var(--border);vertical-align:top}
+.results-table tr:last-child td{border-bottom:none}
+.results-table tr:hover td{background:rgba(255,255,255,0.02)}
+.q-text{color:var(--text);line-height:1.5;max-width:360px}
+.q-text strong{color:var(--text-2);font-weight:500}
+.tag-badge{display:inline-flex;align-items:center;gap:5px;padding:4px 10px;border-radius:5px;font-size:12px;font-weight:600;letter-spacing:.3px}
+.tag-ku{background:var(--ku-bg);color:var(--ku-text)}
+.tag-ap{background:var(--ap-bg);color:var(--ap-text)}
+.tag-th{background:var(--th-bg);color:var(--th-text)}
+.tag-hr{background:var(--warn-bg);color:var(--warn-text)}
+.tag-err{background:var(--err-bg);color:var(--err-text)}
+.reasoning{color:var(--text-2);font-size:12px;line-height:1.55;margin-top:4px;max-width:360px}
+.conf-dot{display:inline-block;width:7px;height:7px;border-radius:50%;margin-right:4px}
+.conf-high{background:var(--ok)}
+.conf-med{background:var(--warn)}
+.conf-low{background:var(--err)}
+
+/* Single checker */
+.single-textarea{width:100%;background:var(--surface2);border:1px solid var(--border-mid);border-radius:7px;color:var(--text);font-family:var(--font);font-size:14px;padding:14px;outline:none;resize:vertical;min-height:120px;transition:border-color .2s;line-height:1.6}
+.single-textarea:focus{border-color:var(--border-strong)}
+.single-textarea::placeholder{color:var(--text-3)}
+.single-result{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:20px;margin-top:16px;display:none}
+.single-result.show{display:block}
+.single-tag-row{display:flex;align-items:center;gap:12px;margin-bottom:12px}
+.single-tag-label{font-size:24px;font-weight:600}
+.single-reasoning{color:var(--text-2);font-size:14px;line-height:1.6;border-top:1px solid var(--border);padding-top:12px;margin-top:4px}
+.single-conf{font-size:13px;color:var(--text-2);display:flex;align-items:center;gap:6px}
+
+/* Loading spinner */
+.spinner{display:inline-block;width:14px;height:14px;border:2px solid rgba(255,255,255,.2);border-top-color:var(--text);border-radius:50%;animation:spin .7s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+
+/* Empty state */
+.empty-state{text-align:center;padding:48px 24px;color:var(--text-3)}
+.empty-state p{font-size:15px;margin-top:8px}
+
+/* Scrollable table on small screens */
+@media(max-width:700px){
+  .results-table-wrap{overflow-x:auto}
+}
+</style>
+</head>
+<body>
+<div class="app">
+
+  <!-- Header -->
+  <div class="header">
+    <div class="header-left">
+      <h1>MagmaMath Question Tagger</h1>
+      <p>Batch analysis of existing question sets · Single question checker for new questions</p>
+    </div>
+    <div class="logo-badge">MAGMAMATH</div>
+  </div>
+
+  <!-- Credential cards -->
+  <div class="creds">
+    <div class="cred-card">
+      <div class="cred-label">🔑 MagmaMath JWT Token</div>
+      <input class="cred-input" id="jwt-input" type="password" placeholder="Paste your JWT token here…" oninput="saveCred('jwt',this.value)"/>
+      <div class="cred-hint">Found in browser DevTools → Network → any request → Authorization header (after "JWT ")</div>
+      <div class="cred-saved" id="jwt-saved">✓ Saved locally</div>
+    </div>
+    <div class="cred-card">
+      <div class="cred-label">🔑 Anthropic API Key</div>
+      <input class="cred-input" id="anthro-input" type="password" placeholder="sk-ant-…" oninput="saveCred('anthropic',this.value)"/>
+      <div class="cred-hint">Get one free at console.anthropic.com — costs fractions of a cent per question</div>
+      <div class="cred-saved" id="anthro-saved">✓ Saved locally</div>
+    </div>
+  </div>
+
+  <!-- Tabs -->
+  <div class="tabs">
+    <button class="tab active" onclick="switchTab('batch')">📊 Batch tagger</button>
+    <button class="tab" onclick="switchTab('single')">🔍 Single question checker</button>
+  </div>
+
+  <!-- BATCH PANEL -->
+  <div class="panel active" id="panel-batch">
+
+    <div class="section-card">
+      <h3>Section ID</h3>
+      <div class="input-row">
+        <input class="input-field" id="section-id" placeholder="e.g. 69c283b2cd374fdd32012c36" />
+        <button class="btn btn-primary" id="fetch-btn" onclick="startBatch()">▶ Fetch &amp; tag questions</button>
+      </div>
+      <p class="input-hint">Find the section ID in WebAdmin — it appears in the URL or breadcrumb when viewing a section</p>
+
+      <div class="progress-wrap" id="progress-wrap">
+        <div class="progress-bar-track"><div class="progress-bar-fill" id="progress-fill"></div></div>
+        <div class="progress-text" id="progress-text">Starting…</div>
+      </div>
+    </div>
+
+    <div class="alert alert-warn" id="alert-warn">
+      <span>⚠</span><span id="alert-warn-msg"></span>
+    </div>
+    <div class="alert alert-err" id="alert-err">
+      <span>✕</span><span id="alert-err-msg"></span>
+    </div>
+    <div class="alert alert-ok" id="alert-ok">
+      <span>✓</span><span id="alert-ok-msg"></span>
+    </div>
+
+    <!-- Results -->
+    <div id="batch-results" style="display:none">
+      <div class="results-header">
+        <h3 id="results-title">Results</h3>
+        <div class="results-actions">
+          <button class="btn btn-secondary btn-sm" onclick="exportCSV()">⬇ Export CSV</button>
+          <button class="btn btn-secondary btn-sm" onclick="clearResults()">✕ Clear</button>
+        </div>
+      </div>
+      <div class="stats-bar" id="stats-bar"></div>
+      <div class="results-table-wrap">
+        <table class="results-table">
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>Question</th>
+              <th>Tag</th>
+              <th>Confidence</th>
+              <th>Reasoning</th>
+            </tr>
+          </thead>
+          <tbody id="results-tbody"></tbody>
+        </table>
+      </div>
+    </div>
+
+  </div><!-- /batch panel -->
+
+  <!-- SINGLE PANEL -->
+  <div class="panel" id="panel-single">
+    <div class="section-card">
+      <h3>Question text</h3>
+      <textarea class="single-textarea" id="single-q" placeholder="Paste a question here — include the stem and all answer options (A, B, C, D)…"></textarea>
+      <div style="margin-top:12px;display:flex;gap:10px;align-items:center;flex-wrap:wrap">
+        <button class="btn btn-primary" id="single-btn" onclick="tagSingle()">🔍 Tag this question</button>
+        <span id="single-spinner" style="display:none"><span class="spinner"></span></span>
+      </div>
+    </div>
+
+    <div class="single-result" id="single-result">
+      <div class="single-tag-row">
+        <div class="tag-badge" id="single-badge" style="font-size:16px;padding:8px 16px"></div>
+        <div class="single-conf" id="single-conf"></div>
+      </div>
+      <div class="single-reasoning" id="single-reasoning"></div>
+    </div>
+  </div><!-- /single panel -->
+
+</div><!-- /app -->
+
+<script>
+// ── Storage ──────────────────────────────────────────────
+const LS = {
+  jwt: 'magma_jwt',
+  anthropic: 'magma_anthropic_key'
+};
+
+function loadCreds() {
+  const jwt = localStorage.getItem(LS.jwt);
+  const ant = localStorage.getItem(LS.anthropic);
+  if (jwt) {
+    document.getElementById('jwt-input').value = jwt;
+    document.getElementById('jwt-saved').classList.add('show');
+  }
+  if (ant) {
+    document.getElementById('anthro-input').value = ant;
+    document.getElementById('anthro-saved').classList.add('show');
+  }
+}
+
+function saveCred(type, val) {
+  const key = type === 'jwt' ? LS.jwt : LS.anthropic;
+  const savedEl = type === 'jwt' ? 'jwt-saved' : 'anthro-saved';
+  if (val.trim()) {
+    localStorage.setItem(key, val.trim());
+    document.getElementById(savedEl).classList.add('show');
+  } else {
+    localStorage.removeItem(key);
+    document.getElementById(savedEl).classList.remove('show');
+  }
+}
+
+function getCreds() {
+  return {
+    jwt: document.getElementById('jwt-input').value.trim(),
+    anthropic: document.getElementById('anthro-input').value.trim()
+  };
+}
+
+// ── Tabs ─────────────────────────────────────────────────
+function switchTab(tab) {
+  document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+  document.getElementById('panel-' + tab).classList.add('active');
+  event.target.classList.add('active');
+}
+
+// ── Alerts ───────────────────────────────────────────────
+function showAlert(type, msg) {
+  ['warn','err','ok'].forEach(t => {
+    const el = document.getElementById('alert-' + t);
+    el.classList.remove('show');
+  });
+  if (type && msg) {
+    document.getElementById('alert-' + type + '-msg').textContent = msg;
+    document.getElementById('alert-' + type).classList.add('show');
+  }
+}
+
+// ── Progress ─────────────────────────────────────────────
+function setProgress(done, total) {
+  const wrap = document.getElementById('progress-wrap');
+  const fill = document.getElementById('progress-fill');
+  const text = document.getElementById('progress-text');
+  wrap.classList.add('show');
+  const pct = total > 0 ? Math.round((done / total) * 100) : 0;
+  fill.style.width = pct + '%';
+  text.textContent = total > 0 ? `Tagging question ${done} of ${total}…` : 'Fetching questions…';
+}
+
+function hideProgress() {
+  document.getElementById('progress-wrap').classList.remove('show');
+}
+
+// ── Claude tagging ────────────────────────────────────────
+const SYSTEM_PROMPT = `You are an expert in Ontario mathematics curriculum assessment. Your job is to classify math questions as KU, AP, or TH according to these precise definitions:
+
+TAG 1 — KU (Knowledge & Understanding):
+- Student recalls a fact, names a property, or executes a procedure directly and without context
+- No real-world scenario or story — just the math
+- Stem states the procedure or concept directly: "What is 7 × 5?" or "Which symbol completes 473 __ 437?"
+- Simple test: Does the student produce a value or execute a procedure with NO context? → KU
+
+TAG 2 — AP (Application):
+- Student must decide which skill is needed, apply it to an unfamiliar situation, and interpret the result
+- MUST have a real-world scenario, story, or context (names, objects, situations)
+- Stem describes a scenario: "Amara earns $150 babysitting..." or "A plank is 3.45 m long..."
+- Simple test: Does the student interpret a scenario, decide what to do, then execute? → AP
+
+TAG 3 — TH (Thinking):
+- Student evaluates a claim, spots an error, compares methods, or reasons about a result rather than produce one
+- Stem gives a claim or result and asks the student to evaluate: "Dawit says... Is he correct?" or "Which response correctly explains..."
+- Non-routine reasoning required — working backwards, generalising, error-spotting
+- Simple test: Does the student evaluate a claim, explain a result, or reason about a method? → TH
+
+If the question contains only an image with no readable text, respond with HUMAN_REVIEW.
+
+Respond in this exact JSON format only, no other text:
+{"tag":"KU","confidence":"high","reasoning":"One sentence explaining why."}
+
+Confidence levels: "high" (very clear), "medium" (mostly clear), "low" (borderline case)
+Tag values: "KU", "AP", "TH", "HUMAN_REVIEW"`;
+
+async function callClaude(questionText, anthropicKey) {
+  const resp = await fetch('https://api.anthropic.com/v1/messages', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      'x-api-key': anthropicKey,
+      'anthropic-version': '2023-06-01',
+      'anthropic-dangerous-direct-browser-access': 'true'
+    },
+    body: JSON.stringify({
+      model: 'claude-sonnet-4-20250514',
+      max_tokens: 200,
+      system: SYSTEM_PROMPT,
+      messages: [{ role: 'user', content: 'Classify this question:\n\n' + questionText }]
+    })
+  });
+  if (!resp.ok) {
+    const err = await resp.json().catch(() => ({}));
+    throw new Error(err.error?.message || 'Claude API error ' + resp.status);
+  }
+  const data = await resp.json();
+  const raw = data.content[0].text.trim();
+  return JSON.parse(raw);
+}
+
+// ── MagmaMath API ─────────────────────────────────────────
+async function fetchSection(sectionId, jwt) {
+  const url = `https://api.magmamath.com/v2/problems?sectionId=${sectionId}&fetchAll=1&useFallbackLocale=0&locale=en-SE`;
+  const resp = await fetch(url, {
+    headers: { 'Authorization': 'JWT ' + jwt }
+  });
+  if (!resp.ok) {
+    if (resp.status === 401) throw new Error('JWT token is expired or invalid. Please refresh it from DevTools.');
+    if (resp.status === 404) throw new Error('Section ID not found. Double-check the ID from WebAdmin.');
+    throw new Error('MagmaMath API error: ' + resp.status);
+  }
+  return resp.json();
+}
+
+function extractQuestionText(problem) {
+  // MagmaMath uses richDescription as the primary question text (may contain LaTeX)
+  // Fall back through other possible fields
+  const candidates = [
+    problem.richDescription,
+    problem.laTeXDescription,
+    problem.description,
+    problem.text,
+    problem.question,
+    problem.stem,
+    problem.body,
+    problem.name
+  ];
+  for (const c of candidates) {
+    if (typeof c === 'string' && c.trim().length > 3) return c.trim();
+  }
+  return null;
+}
+
+// ── Batch tagger ──────────────────────────────────────────
+let batchResults = [];
+
+async function startBatch() {
+  const { jwt, anthropic } = getCreds();
+  const sectionId = document.getElementById('section-id').value.trim();
+
+  showAlert(null);
+  if (!jwt) { showAlert('err', 'Please enter your MagmaMath JWT token above.'); return; }
+  if (!anthropic) { showAlert('err', 'Please enter your Anthropic API key above.'); return; }
+  if (!sectionId) { showAlert('err', 'Please enter a Section ID.'); return; }
+
+  const btn = document.getElementById('fetch-btn');
+  btn.disabled = true;
+  btn.innerHTML = '<span class="spinner"></span> Working…';
+  document.getElementById('batch-results').style.display = 'none';
+  batchResults = [];
+
+  try {
+    setProgress(0, 0);
+    const data = await fetchSection(sectionId, jwt);
+
+    let problems = Array.isArray(data) ? data : (data.problems || data.data || data.items || data.results || []);
+    // Last resort: find any array value in the response object
+    if (!problems.length && typeof data === 'object') {
+      const arrVal = Object.values(data).find(v => Array.isArray(v) && v.length > 0);
+      if (arrVal) problems = arrVal;
+    }
+    if (!problems.length) {
+      showAlert('warn', 'No problems found in this section. Check the Section ID.');
+      hideProgress();
+      btn.disabled = false;
+      btn.innerHTML = '▶ Fetch &amp; tag questions';
+      return;
+    }
+
+    const total = problems.length;
+    let done = 0;
+    let humanReview = 0;
+    let errors = 0;
+
+    for (const prob of problems) {
+      const qText = extractQuestionText(prob);
+      let result;
+
+      if (!qText) {
+        result = { tag: 'HUMAN_REVIEW', confidence: 'low', reasoning: 'No readable question text found — may be image-only.' };
+        humanReview++;
+      } else {
+        try {
+          result = await callClaude(qText, anthropic);
+          if (result.tag === 'HUMAN_REVIEW') humanReview++;
+        } catch(e) {
+          result = { tag: 'ERROR', confidence: 'low', reasoning: e.message };
+          errors++;
+        }
+      }
+
+      batchResults.push({
+        id: prob._id || prob.id || ('Q' + (done + 1)),
+        text: qText || '[Image-only question]',
+        ...result
+      });
+
+      done++;
+      setProgress(done, total);
+      renderResults(); // live update
+    }
+
+    hideProgress();
+    const warnParts = [];
+    if (humanReview > 0) warnParts.push(`${humanReview} question(s) need human review (image-only or unclear)`);
+    if (errors > 0) warnParts.push(`${errors} error(s) — check console`);
+    if (warnParts.length) {
+      showAlert('warn', warnParts.join('. '));
+    } else {
+      showAlert('ok', `All ${total} questions tagged successfully.`);
+    }
+
+  } catch(e) {
+    hideProgress();
+    showAlert('err', e.message);
+  }
+
+  btn.disabled = false;
+  btn.innerHTML = '▶ Fetch &amp; tag questions';
+}
+
+function renderResults() {
+  const container = document.getElementById('batch-results');
+  container.style.display = 'block';
+
+  const counts = { KU:0, AP:0, TH:0, HUMAN_REVIEW:0, ERROR:0 };
+  batchResults.forEach(r => { if (counts[r.tag] !== undefined) counts[r.tag]++; });
+
+  // Title
+  document.getElementById('results-title').textContent = `Results — ${batchResults.length} question${batchResults.length !== 1 ? 's' : ''}`;
+
+  // Stats
+  const statsBar = document.getElementById('stats-bar');
+  statsBar.innerHTML = `
+    ${counts.KU ? `<div class="stat-pill stat-ku">KU ${counts.KU}</div>` : ''}
+    ${counts.AP ? `<div class="stat-pill stat-ap">AP ${counts.AP}</div>` : ''}
+    ${counts.TH ? `<div class="stat-pill stat-th">TH ${counts.TH}</div>` : ''}
+    ${counts.HUMAN_REVIEW ? `<div class="stat-pill stat-warn">⚠ Review ${counts.HUMAN_REVIEW}</div>` : ''}
+  `;
+
+  // Table
+  const tbody = document.getElementById('results-tbody');
+  tbody.innerHTML = batchResults.map((r, i) => {
+    const badge = tagBadge(r.tag);
+    const conf = confDot(r.confidence);
+    const shortText = r.text.length > 120 ? r.text.slice(0, 120) + '…' : r.text;
+    return `<tr>
+      <td style="color:var(--text-3);font-family:var(--mono);font-size:12px">${i + 1}</td>
+      <td><div class="q-text">${escHtml(shortText)}</div></td>
+      <td>${badge}</td>
+      <td>${conf}</td>
+      <td><div class="reasoning">${escHtml(r.reasoning || '')}</div></td>
+    </tr>`;
+  }).join('');
+}
+
+function tagBadge(tag) {
+  const map = { KU:'tag-ku', AP:'tag-ap', TH:'tag-th', HUMAN_REVIEW:'tag-hr', ERROR:'tag-err' };
+  const cls = map[tag] || 'tag-hr';
+  const label = tag === 'HUMAN_REVIEW' ? '⚠ Review' : tag === 'ERROR' ? '✕ Error' : tag;
+  return `<span class="tag-badge ${cls}">${label}</span>`;
+}
+
+function confDot(conf) {
+  const cls = conf === 'high' ? 'conf-high' : conf === 'medium' ? 'conf-med' : 'conf-low';
+  const label = conf ? (conf.charAt(0).toUpperCase() + conf.slice(1)) : '—';
+  return `<span style="font-size:13px;color:var(--text-2)"><span class="conf-dot ${cls}"></span>${label}</span>`;
+}
+
+function escHtml(s) {
+  return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+
+function clearResults() {
+  batchResults = [];
+  document.getElementById('batch-results').style.display = 'none';
+  showAlert(null);
+}
+
+// ── CSV Export ────────────────────────────────────────────
+function exportCSV() {
+  if (!batchResults.length) return;
+  const headers = ['#', 'Question text', 'Tag', 'Confidence', 'Reasoning'];
+  const rows = batchResults.map((r, i) => [
+    i + 1,
+    '"' + (r.text || '').replace(/"/g, '""') + '"',
+    r.tag,
+    r.confidence || '',
+    '"' + (r.reasoning || '').replace(/"/g, '""') + '"'
+  ]);
+  const csv = [headers.join(','), ...rows.map(r => r.join(','))].join('\n');
+  const blob = new Blob([csv], { type: 'text/csv' });
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = 'magma_tags_' + new Date().toISOString().slice(0,10) + '.csv';
+  a.click();
+}
+
+// ── Single checker ────────────────────────────────────────
+async function tagSingle() {
+  const { anthropic } = getCreds();
+  const q = document.getElementById('single-q').value.trim();
+
+  if (!anthropic) { alert('Please enter your Anthropic API key above.'); return; }
+  if (!q) { alert('Please paste a question first.'); return; }
+
+  const btn = document.getElementById('single-btn');
+  const spinner = document.getElementById('single-spinner');
+  btn.disabled = true;
+  btn.textContent = 'Tagging…';
+  spinner.style.display = 'inline';
+  document.getElementById('single-result').classList.remove('show');
+
+  try {
+    const result = await callClaude(q, anthropic);
+    const badge = document.getElementById('single-badge');
+    const map = { KU:'tag-ku', AP:'tag-ap', TH:'tag-th', HUMAN_REVIEW:'tag-hr', ERROR:'tag-err' };
+    badge.className = 'tag-badge ' + (map[result.tag] || 'tag-hr');
+    badge.textContent = result.tag === 'HUMAN_REVIEW' ? '⚠ Human Review' : result.tag;
+    badge.style.fontSize = '16px';
+    badge.style.padding = '8px 16px';
+
+    const tagNames = { KU: 'Knowledge & Understanding', AP: 'Application', TH: 'Thinking', HUMAN_REVIEW: 'Human Review Needed' };
+    document.getElementById('single-conf').innerHTML = confDot(result.confidence) + '&nbsp;&nbsp;<span style="color:var(--text-3)">' + (tagNames[result.tag] || '') + '</span>';
+    document.getElementById('single-reasoning').textContent = result.reasoning || '';
+    document.getElementById('single-result').classList.add('show');
+  } catch(e) {
+    alert('Error: ' + e.message);
+  }
+
+  btn.disabled = false;
+  btn.textContent = '🔍 Tag this question';
+  spinner.style.display = 'none';
+}
+
+// ── Init ──────────────────────────────────────────────────
+loadCreds();
+</script>
+</body>
+</html>
