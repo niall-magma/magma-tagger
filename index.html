@@ -42,18 +42,6 @@ body{font-family:var(--font);background:var(--bg);color:var(--text);min-height:1
 .header-left p{color:var(--text-2);font-size:14px;margin-top:4px}
 .logo-badge{background:var(--accent);color:#fff;font-size:11px;font-weight:600;letter-spacing:1.5px;padding:6px 14px;border-radius:20px;white-space:nowrap;align-self:flex-start}
 
-/* Credential cards */
-.creds{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:28px}
-@media(max-width:600px){.creds{grid-template-columns:1fr}}
-.cred-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:16px}
-.cred-label{font-size:11px;font-weight:600;letter-spacing:1px;color:var(--warn);margin-bottom:10px;display:flex;align-items:center;gap:6px}
-.cred-label i{font-size:13px}
-.cred-input{width:100%;background:var(--surface2);border:1px solid var(--border-mid);border-radius:7px;color:var(--text);font-family:var(--mono);font-size:12px;padding:10px 12px;outline:none;transition:border-color .2s}
-.cred-input:focus{border-color:var(--border-strong)}
-.cred-input::placeholder{color:var(--text-3)}
-.cred-hint{font-size:12px;color:var(--text-3);margin-top:7px;line-height:1.5}
-.cred-saved{font-size:11px;color:var(--ok-text);margin-top:6px;display:none;align-items:center;gap:4px}
-.cred-saved.show{display:flex}
 
 /* Tabs */
 .tabs{display:flex;gap:4px;background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:4px;margin-bottom:24px;width:fit-content}
@@ -171,22 +159,6 @@ body{font-family:var(--font);background:var(--bg);color:var(--text);min-height:1
     <div class="logo-badge">MAGMAMATH</div>
   </div>
 
-  <!-- Credential cards -->
-  <div class="creds">
-    <div class="cred-card">
-      <div class="cred-label">🔑 MagmaMath JWT Token</div>
-      <input class="cred-input" id="jwt-input" type="password" placeholder="Paste your JWT token here…" oninput="saveCred('jwt',this.value)"/>
-      <div class="cred-hint">Found in browser DevTools → Network → any request → Authorization header (after "JWT ")</div>
-      <div class="cred-saved" id="jwt-saved">✓ Saved locally</div>
-    </div>
-    <div class="cred-card">
-      <div class="cred-label">🔑 Anthropic API Key</div>
-      <input class="cred-input" id="anthro-input" type="password" placeholder="sk-ant-…" oninput="saveCred('anthropic',this.value)"/>
-      <div class="cred-hint">Get one free at console.anthropic.com — costs fractions of a cent per question</div>
-      <div class="cred-saved" id="anthro-saved">✓ Saved locally</div>
-    </div>
-  </div>
-
   <!-- Tabs -->
   <div class="tabs">
     <button class="tab active" onclick="switchTab('batch')">📊 Batch tagger</button>
@@ -271,44 +243,6 @@ body{font-family:var(--font);background:var(--bg);color:var(--text);min-height:1
 </div><!-- /app -->
 
 <script>
-// ── Storage ──────────────────────────────────────────────
-const LS = {
-  jwt: 'magma_jwt',
-  anthropic: 'magma_anthropic_key'
-};
-
-function loadCreds() {
-  const jwt = localStorage.getItem(LS.jwt);
-  const ant = localStorage.getItem(LS.anthropic);
-  if (jwt) {
-    document.getElementById('jwt-input').value = jwt;
-    document.getElementById('jwt-saved').classList.add('show');
-  }
-  if (ant) {
-    document.getElementById('anthro-input').value = ant;
-    document.getElementById('anthro-saved').classList.add('show');
-  }
-}
-
-function saveCred(type, val) {
-  const key = type === 'jwt' ? LS.jwt : LS.anthropic;
-  const savedEl = type === 'jwt' ? 'jwt-saved' : 'anthro-saved';
-  if (val.trim()) {
-    localStorage.setItem(key, val.trim());
-    document.getElementById(savedEl).classList.add('show');
-  } else {
-    localStorage.removeItem(key);
-    document.getElementById(savedEl).classList.remove('show');
-  }
-}
-
-function getCreds() {
-  return {
-    jwt: document.getElementById('jwt-input').value.trim(),
-    anthropic: document.getElementById('anthro-input').value.trim()
-  };
-}
-
 // ── Tabs ─────────────────────────────────────────────────
 function switchTab(tab) {
   document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
@@ -320,8 +254,7 @@ function switchTab(tab) {
 // ── Alerts ───────────────────────────────────────────────
 function showAlert(type, msg) {
   ['warn','err','ok'].forEach(t => {
-    const el = document.getElementById('alert-' + t);
-    el.classList.remove('show');
+    document.getElementById('alert-' + t).classList.remove('show');
   });
   if (type && msg) {
     document.getElementById('alert-' + type + '-msg').textContent = msg;
@@ -344,77 +277,26 @@ function hideProgress() {
   document.getElementById('progress-wrap').classList.remove('show');
 }
 
-// ── Claude tagging ────────────────────────────────────────
-const SYSTEM_PROMPT = `You are an expert in Ontario mathematics curriculum assessment. Your job is to classify math questions as KU, AP, or TH according to these precise definitions:
-
-TAG 1 — KU (Knowledge & Understanding):
-- Student recalls a fact, names a property, or executes a procedure directly and without context
-- No real-world scenario or story — just the math
-- Stem states the procedure or concept directly: "What is 7 × 5?" or "Which symbol completes 473 __ 437?"
-- Simple test: Does the student produce a value or execute a procedure with NO context? → KU
-
-TAG 2 — AP (Application):
-- Student must decide which skill is needed, apply it to an unfamiliar situation, and interpret the result
-- MUST have a real-world scenario, story, or context (names, objects, situations)
-- Stem describes a scenario: "Amara earns $150 babysitting..." or "A plank is 3.45 m long..."
-- Simple test: Does the student interpret a scenario, decide what to do, then execute? → AP
-
-TAG 3 — TH (Thinking):
-- Student evaluates a claim, spots an error, compares methods, or reasons about a result rather than produce one
-- Stem gives a claim or result and asks the student to evaluate: "Dawit says... Is he correct?" or "Which response correctly explains..."
-- Non-routine reasoning required — working backwards, generalising, error-spotting
-- Simple test: Does the student evaluate a claim, explain a result, or reason about a method? → TH
-
-If the question contains only an image with no readable text, respond with HUMAN_REVIEW.
-
-Respond in this exact JSON format only, no other text:
-{"tag":"KU","confidence":"high","reasoning":"One sentence explaining why."}
-
-Confidence levels: "high" (very clear), "medium" (mostly clear), "low" (borderline case)
-Tag values: "KU", "AP", "TH", "HUMAN_REVIEW"`;
-
-async function callClaude(questionText, anthropicKey) {
-  const resp = await fetch('https://api.anthropic.com/v1/messages', {
+// ── API calls ─────────────────────────────────────────────
+async function callTagAPI(questionText) {
+  const resp = await fetch('/api/tag', {
     method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-      'x-api-key': anthropicKey,
-      'anthropic-version': '2023-06-01',
-      'anthropic-dangerous-direct-browser-access': 'true'
-    },
-    body: JSON.stringify({
-      model: 'claude-sonnet-4-20250514',
-      max_tokens: 200,
-      system: SYSTEM_PROMPT,
-      messages: [{ role: 'user', content: 'Classify this question:\n\n' + questionText }]
-    })
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ questionText })
   });
-  if (!resp.ok) {
-    const err = await resp.json().catch(() => ({}));
-    throw new Error(err.error?.message || 'Claude API error ' + resp.status);
-  }
   const data = await resp.json();
-  const raw = data.content[0].text.trim();
-  return JSON.parse(raw);
+  if (!resp.ok) throw new Error(data.error || 'Tag API error ' + resp.status);
+  return data;
 }
 
-// ── MagmaMath API ─────────────────────────────────────────
-async function fetchSection(sectionId, jwt) {
-  const url = `https://api.magmamath.com/v2/sections/${sectionId}?fetchAll=1&useFallbackLocale=0&locale=en-SE&showHiddenProblems=1`;
-  const resp = await fetch(url, {
-    headers: { 'Authorization': 'JWT ' + jwt }
-  });
-  if (!resp.ok) {
-    if (resp.status === 401) throw new Error('JWT token is expired or invalid. Please refresh it from DevTools.');
-    if (resp.status === 404) throw new Error('Section ID not found. Double-check the ID from WebAdmin.');
-    throw new Error('MagmaMath API error: ' + resp.status);
-  }
-  return resp.json();
+async function fetchSection(sectionId) {
+  const resp = await fetch('/api/section/' + encodeURIComponent(sectionId));
+  const data = await resp.json();
+  if (!resp.ok) throw new Error(data.error || 'Section API error ' + resp.status);
+  return data;
 }
 
 function extractQuestionText(problem) {
-  // MagmaMath uses richDescription as the primary question text (may contain LaTeX)
-  // Fall back through other possible fields
   const candidates = [
     problem.richDescription,
     problem.laTeXDescription,
@@ -435,12 +317,9 @@ function extractQuestionText(problem) {
 let batchResults = [];
 
 async function startBatch() {
-  const { jwt, anthropic } = getCreds();
   const sectionId = document.getElementById('section-id').value.trim();
 
   showAlert(null);
-  if (!jwt) { showAlert('err', 'Please enter your MagmaMath JWT token above.'); return; }
-  if (!anthropic) { showAlert('err', 'Please enter your Anthropic API key above.'); return; }
   if (!sectionId) { showAlert('err', 'Please enter a Section ID.'); return; }
 
   const btn = document.getElementById('fetch-btn');
@@ -451,10 +330,9 @@ async function startBatch() {
 
   try {
     setProgress(0, 0);
-    const data = await fetchSection(sectionId, jwt);
+    const data = await fetchSection(sectionId);
 
     let problems = data.problems || [];
-    // Fallback for other shapes just in case
     if (!problems.length) {
       problems = Array.isArray(data) ? data : (data.data || data.items || data.results || []);
     }
@@ -480,7 +358,7 @@ async function startBatch() {
         humanReview++;
       } else {
         try {
-          result = await callClaude(qText, anthropic);
+          result = await callTagAPI(qText);
           if (result.tag === 'HUMAN_REVIEW') humanReview++;
         } catch(e) {
           result = { tag: 'ERROR', confidence: 'low', reasoning: e.message };
@@ -496,7 +374,7 @@ async function startBatch() {
 
       done++;
       setProgress(done, total);
-      renderResults(); // live update
+      renderResults();
     }
 
     hideProgress();
@@ -525,10 +403,8 @@ function renderResults() {
   const counts = { KU:0, AP:0, TH:0, HUMAN_REVIEW:0, ERROR:0 };
   batchResults.forEach(r => { if (counts[r.tag] !== undefined) counts[r.tag]++; });
 
-  // Title
   document.getElementById('results-title').textContent = `Results — ${batchResults.length} question${batchResults.length !== 1 ? 's' : ''}`;
 
-  // Stats
   const statsBar = document.getElementById('stats-bar');
   statsBar.innerHTML = `
     ${counts.KU ? `<div class="stat-pill stat-ku">KU ${counts.KU}</div>` : ''}
@@ -537,7 +413,6 @@ function renderResults() {
     ${counts.HUMAN_REVIEW ? `<div class="stat-pill stat-warn">⚠ Review ${counts.HUMAN_REVIEW}</div>` : ''}
   `;
 
-  // Table
   const tbody = document.getElementById('results-tbody');
   tbody.innerHTML = batchResults.map((r, i) => {
     const badge = tagBadge(r.tag);
@@ -597,10 +472,7 @@ function exportCSV() {
 
 // ── Single checker ────────────────────────────────────────
 async function tagSingle() {
-  const { anthropic } = getCreds();
   const q = document.getElementById('single-q').value.trim();
-
-  if (!anthropic) { alert('Please enter your Anthropic API key above.'); return; }
   if (!q) { alert('Please paste a question first.'); return; }
 
   const btn = document.getElementById('single-btn');
@@ -611,7 +483,7 @@ async function tagSingle() {
   document.getElementById('single-result').classList.remove('show');
 
   try {
-    const result = await callClaude(q, anthropic);
+    const result = await callTagAPI(q);
     const badge = document.getElementById('single-badge');
     const map = { KU:'tag-ku', AP:'tag-ap', TH:'tag-th', HUMAN_REVIEW:'tag-hr', ERROR:'tag-err' };
     badge.className = 'tag-badge ' + (map[result.tag] || 'tag-hr');
@@ -631,9 +503,6 @@ async function tagSingle() {
   btn.textContent = '🔍 Tag this question';
   spinner.style.display = 'none';
 }
-
-// ── Init ──────────────────────────────────────────────────
-loadCreds();
 </script>
 </body>
 </html>
