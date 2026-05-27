@@ -4,7 +4,11 @@
       "Bash(git init *)",
       "Bash(git add *)",
       "Bash(git branch *)",
-      "Bash(git commit -m ' *)"
+      "Bash(git commit -m ' *)",
+      "Bash(npm install *)",
+      "Bash(node --check /Users/niallsimmons/Desktop/magma-tagger/server.js)",
+      "Bash(git check-ignore *)",
+      "Bash(git push *)"
     ]
   }
 }
