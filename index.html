@@ -698,8 +698,11 @@ async function callClaude(userMsg) {
     throw new Error(e.error?.message || 'API error ' + res.status);
   }
   const d = await res.json();
-  const text = d.candidates?.[0]?.content?.parts?.[0]?.text || '';
-  return JSON.parse(text.replace(/```json\n?|\n?```/g, '').trim());
+  const parts = d.candidates?.[0]?.content?.parts || [];
+  const text = parts.map(p => p.text || '').join('');
+  const match = text.match(/\{[\s\S]*\}/);
+  if (!match) throw new Error('No JSON found in response');
+  return JSON.parse(match[0]);
 }
 
 function classifyPrompt(q) {
