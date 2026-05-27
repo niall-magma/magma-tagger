@@ -700,7 +700,8 @@ async function callClaude(userMsg) {
   const d = await res.json();
   const parts = d.candidates?.[0]?.content?.parts || [];
   const text = parts.map(p => p.text || '').join('');
-  const match = text.match(/\{[\s\S]*\}/);
+  const cleaned = text.replace(/```json\n?|```/g, '').trim();
+  const match = cleaned.match(/\{[\s\S]*\}/);
   if (!match) throw new Error('No JSON found. Raw: ' + text.slice(0, 300));
   return JSON.parse(match[0]);
 }
