@@ -143,7 +143,7 @@
     background: var(--line);
   }
 
-  input[type="password"], textarea {
+  input[type="password"], input[type="text"], textarea {
     width: 100%;
     font-family: 'DM Mono', monospace;
     font-size: 13px;
@@ -630,10 +630,16 @@
   <!-- Batch tab -->
   <div id="tab-batch" class="tab-panel">
     <div class="card">
-      <div class="card-label">Questions — one per line</div>
-      <textarea id="batchInput" rows="10" placeholder="What is 7 × 5?&#10;A nature trail is 645 metres long. Nadia walks 378 metres before stopping for a rest. How many metres does she still need to walk?&#10;Dawit says 609 > 690. Is he correct? Choose the statement that best explains why."></textarea>
+      <div class="card-label">MagmaMath JWT Token</div>
+      <input type="password" id="jwtToken" placeholder="eyJ..." autocomplete="off" />
+      <p class="input-hint">From WebAdmin: open DevTools (Cmd+Option+J) → Network tab → any api.magmamath.com request → Authorization header (paste everything after "JWT ").</p>
+    </div>
+    <div class="card">
+      <div class="card-label">Section ID</div>
+      <input type="text" id="sectionId" placeholder="e.g. 69bc5fce48e022a65e77f1f1" autocomplete="off" style="font-family:var(--font-mono, monospace);font-size:13px" />
+      <p class="input-hint">Found in the WebAdmin URL when you open a section.</p>
       <div class="btn-row">
-        <button class="btn-primary" id="batchBtn" onclick="runBatch()">Classify all</button>
+        <button class="btn-primary" id="batchBtn" onclick="runBatch()">Fetch &amp; classify section</button>
         <button class="btn-ghost" id="stopBtn" style="display:none" onclick="stopBatch()">Stop</button>
         <button class="btn-ghost" id="exportBtn" style="display:none" onclick="exportCSV()">Export CSV</button>
       </div>
@@ -641,6 +647,7 @@
         <div class="progress-bar-wrap"><div class="progress-bar" id="progressBar" style="width:0%"></div></div>
         <p style="font-size:12px;color:var(--muted)" id="progressLabel"></p>
       </div>
+      <div id="batchError"></div>
     </div>
     <div id="batchSummary"></div>
     <div id="batchResults"></div>
@@ -877,24 +884,74 @@ let batchRunning = false;
 let batchStop = false;
 let batchData = [];
 
+// Persist JWT
+const jwtInput = document.getElementById('jwtToken');
+jwtInput.value = localStorage.getItem('magma_jwt') || '';
+jwtInput.addEventListener('input', () => localStorage.setItem('magma_jwt', jwtInput.value.trim()));
+
+async function fetchSection(sectionId, jwt) {
+  const url = `https://api.magmamath.com/v2/sections/${sectionId}?fetchAll=1&useFallbackLocale=0&locale=en-SE&showHiddenProblems=1`;
+  const res = await fetch(url, { headers: { 'Authorization': 'JWT ' + jwt } });
+  if (res.status === 401) throw new Error('JWT token is expired or invalid. Get a fresh one from WebAdmin DevTools.');
+  if (res.status === 404) throw new Error('Section not found. Double-check the section ID.');
+  if (!res.ok) throw new Error('MagmaMath API error: ' + res.status);
+  const data = await res.json();
+  return data.problems || data.data || (Array.isArray(data) ? data : []);
+}
+
+function extractText(problem) {
+  const raw = problem.richDescription || problem.description || '';
+  return raw.replace(/\$([^$]+)\$/g, '$1').trim() || '[Image-only question]';
+}
+
 async function runBatch() {
-  const lines = document.getElementById('batchInput').value.split('\n').map(l => l.trim()).filter(l => l);
-  if (!lines.length) return;
+  const sectionId = document.getElementById('sectionId').value.trim();
+  const jwt = document.getElementById('jwtToken').value.trim();
   showError('batchError', '');
 
-  batchData = lines.map(q => ({ question: q, result: null, error: null, expanded: false }));
-  batchRunning = true; batchStop = false;
+  if (!sectionId) { showError('batchError', 'Please enter a section ID.'); return; }
+  if (!jwt) { showError('batchError', 'Please enter your MagmaMath JWT token.'); return; }
+  if (!getKey()) { showError('batchError', 'Please enter your Gemini API key above.'); return; }
 
   document.getElementById('batchBtn').disabled = true;
   document.getElementById('stopBtn').style.display = '';
   document.getElementById('exportBtn').style.display = 'none';
   document.getElementById('batchProgress').style.display = '';
   document.getElementById('batchSummary').innerHTML = '';
+  document.getElementById('batchResults').innerHTML = '';
+  setProgress(0, 1);
+  document.getElementById('progressLabel').textContent = 'Fetching questions from MagmaMath…';
+
+  let problems;
+  try {
+    problems = await fetchSection(sectionId, jwt);
+  } catch(e) {
+    showError('batchError', e.message);
+    document.getElementById('batchBtn').disabled = false;
+    document.getElementById('stopBtn').style.display = 'none';
+    document.getElementById('batchProgress').style.display = 'none';
+    return;
+  }
+
+  if (!problems.length) {
+    showError('batchError', 'No questions found in this section.');
+    document.getElementById('batchBtn').disabled = false;
+    document.getElementById('stopBtn').style.display = 'none';
+    return;
+  }
+
+  batchData = problems.map(p => ({ id: p._id, question: extractText(p), result: null, error: null, expanded: false }));
+  batchRunning = true; batchStop = false;
   renderBatchRows();
 
   for (let i = 0; i < batchData.length; i++) {
     if (batchStop) break;
     setProgress(i, batchData.length);
+    if (batchData[i].question === '[Image-only question]') {
+      batchData[i].error = 'Image-only — needs human review';
+      updateBatchRow(i);
+      continue;
+    }
     try {
       const r = await callClaude(classifyPrompt(batchData[i].question));
       batchData[i].result = r;
@@ -902,6 +959,7 @@ async function runBatch() {
       batchData[i].error = e.message;
     }
     updateBatchRow(i);
+    await new Promise(r => setTimeout(r, 150));
   }
 
   setProgress(batchData.filter(d => d.result||d.error).length, batchData.length);
