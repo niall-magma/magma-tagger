@@ -602,9 +602,9 @@
 
   <!-- API Key -->
   <div class="card">
-    <div class="card-label">Anthropic API Key</div>
-    <input type="password" id="apiKey" placeholder="sk-ant-api03-..." autocomplete="off" />
-    <p class="input-hint">Stored only in your browser. Never leaves your device except to call the Anthropic API.</p>
+    <div class="card-label">Gemini API Key</div>
+    <input type="password" id="apiKey" placeholder="AIza..." autocomplete="off" />
+    <p class="input-hint">Stored only in your browser. Never leaves your device except to call the Gemini API.</p>
   </div>
 
   <!-- Tabs -->
@@ -679,25 +679,26 @@ const TAG_STYLE = {
 
 // Persist API key
 const keyInput = document.getElementById('apiKey');
-keyInput.value = localStorage.getItem('magma_api_key') || '';
-keyInput.addEventListener('input', () => localStorage.setItem('magma_api_key', keyInput.value.trim()));
+keyInput.value = localStorage.getItem('magma_gemini_key') || '';
+keyInput.addEventListener('input', () => localStorage.setItem('magma_gemini_key', keyInput.value.trim()));
 
 function getKey() { return keyInput.value.trim(); }
 
 async function callClaude(userMsg) {
   const key = getKey();
-  if (!key) throw new Error('Please enter your Anthropic API key above.');
-  const res = await fetch('https://api.anthropic.com/v1/messages', {
+  if (!key) throw new Error('Please enter your Gemini API key above.');
+  const fullPrompt = SYSTEM + '\n\n' + userMsg;
+  const res = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${key}`, {
     method: 'POST',
-    headers: { 'Content-Type': 'application/json', 'x-api-key': key, 'anthropic-version': '2023-06-01', 'anthropic-dangerous-direct-browser-calls': 'true' },
-    body: JSON.stringify({ model: 'claude-sonnet-4-20250514', max_tokens: 1000, system: SYSTEM, messages: [{ role: 'user', content: userMsg }] })
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ contents: [{ parts: [{ text: fullPrompt }] }], generationConfig: { temperature: 0.1, maxOutputTokens: 1000 } })
   });
   if (!res.ok) {
     const e = await res.json().catch(() => ({}));
     throw new Error(e.error?.message || 'API error ' + res.status);
   }
   const d = await res.json();
-  const text = d.content.map(b => b.text || '').join('');
+  const text = d.candidates?.[0]?.content?.parts?.[0]?.text || '';
   return JSON.parse(text.replace(/```json\n?|\n?```/g, '').trim());
 }
 
