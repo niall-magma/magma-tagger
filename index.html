@@ -774,8 +774,7 @@ function renderSingleResult(result, question) {
       </div>
       <div class="key-signal">"${result.key_signal}"</div>
       <div class="convert-section">
-        <div class="convert-label">Convert this question to a different tag type:</div>
-        <div class="convert-buttons">${convertBtns}</div>
+        <div class="convert-label">Alternative versions</div>
         <div id="conversionResults"></div>
       </div>
     </div>
@@ -813,11 +812,38 @@ async function classifySingle() {
   try {
     const result = await callClaude(classifyPrompt(q));
     document.getElementById('singleResult').innerHTML = renderSingleResult(result, q);
+    // Auto-generate the other two tag versions
+    const others = ['KU','AP','TH'].filter(t => t !== result.tag);
+    for (const toTag of others) {
+      autoConvert(q, result.tag, toTag);
+    }
   } catch(e) {
     showError('singleError', e.message);
   } finally {
     btn.disabled = false;
     btn.textContent = 'Classify question';
+  }
+}
+
+async function autoConvert(question, fromTag, toTag) {
+  const container = document.getElementById('conversionResults');
+  const ts = TAG_STYLE[toTag];
+  // Add a loading placeholder
+  const placeholderId = 'conv-placeholder-' + toTag;
+  container.insertAdjacentHTML('beforeend', `
+    <div id="${placeholderId}" style="margin-top:14px;border:1.5px solid ${ts.border};border-radius:var(--border-radius-lg);overflow:hidden;opacity:0.6">
+      <div style="background:${ts.bg};padding:10px 16px;display:flex;align-items:center;gap:8px">
+        <span style="background:${ts.bg};color:${ts.text};border:1.5px solid ${ts.border};border-radius:20px;padding:3px 10px;font-size:12px;font-weight:600">${toTag}</span>
+        <span style="font-size:12px;color:${ts.text}"><span class="spinner" style="border-color:${ts.border}33;border-top-color:${ts.border};width:10px;height:10px;border-width:1.5px"></span> Generating ${toTag} version…</span>
+      </div>
+    </div>`);
+  try {
+    const res = await callClaude(convertPrompt(question, fromTag, toTag));
+    const placeholder = document.getElementById(placeholderId);
+    if (placeholder) placeholder.outerHTML = renderConversionResult(res, toTag);
+  } catch(e) {
+    const placeholder = document.getElementById(placeholderId);
+    if (placeholder) placeholder.outerHTML = `<div style="margin-top:14px;padding:10px 14px;background:#FFF1F0;border:1px solid #FECACA;border-radius:8px;font-size:13px;color:#991B1B">Failed to generate ${toTag} version: ${e.message.slice(0,100)}</div>`;
   }
 }
 
