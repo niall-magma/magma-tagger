@@ -756,7 +756,7 @@ function renderSingleResult(result, question) {
   const s = TAG_STYLE[result.tag];
   const others = ['KU','AP','TH'].filter(t => t !== result.tag);
   const convertBtns = others.map(t =>
-    `<button class="btn-convert btn-convert-${t.toLowerCase()}" id="conv-${t}" onclick="doConvert('${t}','${encodeURIComponent(question)}')">${result.tag} → ${t}</button>`
+    `<button class="btn-convert btn-convert-${t.toLowerCase()}" id="conv-${t}" onclick="doConvert('${t}','${encodeURIComponent(question)}','${result.tag}')">${result.tag} → ${t}</button>`
   ).join('');
 
   return `<div class="result-card" id="resultCard">
@@ -782,39 +782,22 @@ function renderSingleResult(result, question) {
   </div>`;
 }
 
-async function doConvert(toTag, encodedQ) {
+async function doConvert(toTag, encodedQ, fromTag) {
   const question = decodeURIComponent(encodedQ);
-  const fromTag = document.querySelector('#resultCard .result-header [style*="background"]')?.closest('.result-header')
-    ?.querySelector('span[style*="letter-spacing"]')?.textContent?.trim();
-
   const btn = document.getElementById('conv-' + toTag);
-  const resultEl = document.querySelector('#resultCard #conv-' + toTag)?.closest('.result-card')?.querySelector('#conversionResults');
+  const resultEl = document.getElementById('conversionResults');
+  if (!btn || btn.disabled) return;
 
-  if (!btn || !resultEl) return;
   btn.disabled = true;
   btn.innerHTML = `<span class="spinner"></span>Converting…`;
 
-  // Get the actual current tag from the badge
-  const tagEl = document.querySelector('#resultCard .tag-label, #resultCard span[style*="letter-spacing"]');
-  let currentTag = 'KU';
-  ['KU','AP','TH'].forEach(t => { if (btn.id === 'conv-'+t) return; });
-  // Parse from button text e.g. "KU → AP"
-  const btnParent = btn.closest('.convert-buttons');
-  if (btnParent) {
-    const allBtns = btnParent.querySelectorAll('button');
-    allBtns.forEach(b => {
-      const match = b.textContent.match(/^(\w+) → \w+/);
-      if (match) currentTag = match[1];
-    });
-  }
-
   try {
-    const res = await callClaude(convertPrompt(question, currentTag, toTag));
+    const res = await callClaude(convertPrompt(question, fromTag, toTag));
     resultEl.insertAdjacentHTML('beforeend', renderConversionResult(res, toTag));
     btn.textContent = `✓ ${toTag} done`;
   } catch(e) {
     btn.disabled = false;
-    btn.textContent = `${currentTag} → ${toTag}`;
+    btn.textContent = `${fromTag} → ${toTag}`;
     showError('singleError', 'Conversion failed: ' + e.message);
   }
 }
