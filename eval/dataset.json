@@ -1,0 +1,110 @@
+[
+  {
+    "id": "ku-01",
+    "question": "What is 7 × 5?",
+    "label": "KU",
+    "notes": "Direct procedure, no context"
+  },
+  {
+    "id": "ku-02",
+    "question": "Which symbol correctly completes 473 __ 437?\nA) >\nB) <\nC) =\nD) ≠",
+    "label": "KU",
+    "notes": "Comparing numbers, no scenario"
+  },
+  {
+    "id": "ku-03",
+    "question": "What is the value of 6² ?",
+    "label": "KU",
+    "notes": "Recall/execute exponent rule directly"
+  },
+  {
+    "id": "ku-04",
+    "question": "Which of the following is a prime number?\nA) 9\nB) 15\nC) 17\nD) 21",
+    "label": "KU",
+    "notes": "Recall definition and apply directly"
+  },
+  {
+    "id": "ku-05",
+    "question": "In the expression n + 7, what does n represent?\nA) A fixed value of 7\nB) An unknown value that can change\nC) The answer to the expression\nD) A label for a shape",
+    "label": "KU",
+    "notes": "Tests knowledge of algebraic notation, no scenario"
+  },
+  {
+    "id": "ku-06",
+    "question": "The rule is 'add 3.' What is the 4th term if the first term is 5?",
+    "label": "KU",
+    "notes": "Rule is given in the stem — student just executes"
+  },
+  {
+    "id": "ap-01",
+    "question": "Aisha has 7 groups of 5 tiles. How many tiles does she have in total?",
+    "label": "AP",
+    "notes": "Thin context but requires interpretation of scenario"
+  },
+  {
+    "id": "ap-02",
+    "question": "Amara earns $150 babysitting and spends $48 on art supplies. How much money does she have left?",
+    "label": "AP",
+    "notes": "Real-world scenario, student decides which operation to use"
+  },
+  {
+    "id": "ap-03",
+    "question": "A plank is 3.45 m long. A carpenter cuts off a piece that is 1.8 m. How long is the remaining piece?",
+    "label": "AP",
+    "notes": "Real-world context, student applies subtraction with decimals"
+  },
+  {
+    "id": "ap-04",
+    "question": "A school buys 24 boxes of markers. Each box contains 12 markers. The school wants to divide all the markers equally among 8 classrooms. How many markers does each classroom receive?",
+    "label": "AP",
+    "notes": "Multi-step, real-world, student decides the operations needed"
+  },
+  {
+    "id": "ap-05",
+    "question": "What is the 20th term of the pattern 5, 8, 11, 14...?",
+    "label": "AP",
+    "notes": "Student applies the pattern rule to produce a value"
+  },
+  {
+    "id": "ap-06",
+    "question": "Kofi saves $12 each week. After how many weeks will he have saved at least $100?",
+    "label": "AP",
+    "notes": "Real-world scenario, student decides to use division/estimation"
+  },
+  {
+    "id": "th-01",
+    "question": "Dawit says that 0.6 is greater than 0.62 because 6 is greater than 62. Is he correct? Explain your reasoning.",
+    "label": "TH",
+    "notes": "Error-spotting frame — student evaluates a claim"
+  },
+  {
+    "id": "th-02",
+    "question": "A student says the 20th term of the pattern 5, 8, 11, 14... is 62. Is she correct? Show your work.",
+    "label": "TH",
+    "notes": "Claim evaluation — student must verify a given answer"
+  },
+  {
+    "id": "th-03",
+    "question": "Which of the following correctly explains why 2 × (3 + 4) = 2 × 3 + 2 × 4?\nA) Because multiplication always comes before addition\nB) Because the distributive property states that multiplying a sum is the same as multiplying each addend separately\nC) Because 7 + 7 = 14 and 6 + 8 = 14\nD) Because the order of operations requires brackets first",
+    "label": "TH",
+    "notes": "Explanation/reasoning frame — not executing, evaluating a claim"
+  },
+  {
+    "id": "th-04",
+    "question": "Marcus says that any number multiplied by 0 gives that same number. Which of the following shows he is incorrect?\nA) 5 × 0 = 0\nB) 0 × 0 = 0\nC) 1 × 0 = 1\nD) 10 × 1 = 10",
+    "label": "TH",
+    "notes": "Claim evaluation — find a counterexample to disprove"
+  },
+  {
+    "id": "th-05",
+    "question": "After collecting donations, a charity has $240. This is 3 times the amount they had last month. How much did they have last month?",
+    "label": "TH",
+    "notes": "Working backwards frame — result is given, student reconstructs the starting value"
+  },
+  {
+    "id": "th-06",
+    "question": "Two students each solve the problem: 'Find 25% of 80.' Student A writes 80 ÷ 4 = 20. Student B writes 80 × 0.25 = 20. Which student used a correct method?\nA) Only Student A\nB) Only Student B\nC) Both students used a correct method\nD) Neither student used a correct method",
+    "label": "TH",
+    "notes": "Comparison frame — evaluating two methods rather than executing one"
+  }
+]

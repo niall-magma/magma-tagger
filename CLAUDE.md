@@ -87,7 +87,7 @@ Book → Chapter → Section → Question
 
 ## How the tagger works
 
-Use the Anthropic SDK (`@anthropic-ai/sdk`). Model: `claude-sonnet-4-20250514`.
+Use the Anthropic SDK (`@anthropic-ai/sdk`). Model: `claude-sonnet-4-6`.
 
 The system prompt must include the full classification criteria from `TAGGING_GUIDE.md`.
 

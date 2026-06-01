@@ -8,7 +8,8 @@
       "Bash(npm install *)",
       "Bash(node --check /Users/niallsimmons/Desktop/magma-tagger/server.js)",
       "Bash(git check-ignore *)",
-      "Bash(git push *)"
+      "Bash(git push *)",
+      "Bash(node *)"
     ]
   }
 }
