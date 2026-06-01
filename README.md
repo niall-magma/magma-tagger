@@ -1,67 +1,144 @@
-# MagmaMath Question Tagger
+# Magma Tagger
 
-A tool for classifying MagmaMath questions according to the Ontario mathematics curriculum assessment categories: **KU** (Knowledge & Understanding), **AP** (Application), and **TH** (Thinking). Uses Claude AI to analyse question text and assign tags with a confidence level and reasoning.
+A local CLI and web tool for classifying MagmaMath questions as **KU (Knowledge & Understanding)**, **TH (Thinking)**, or **AP (Application)** — the three cognitive demand tags used in the Ontario EQAO framework.
 
-## What it does
-
-Given a MagmaMath section ID, the tagger:
-1. Fetches all questions in that section via the MagmaMath API (JWT auth)
-2. Sends each question's text to Claude (claude-sonnet-4) for classification
-3. Returns a tag (`KU`, `AP`, `TH`, or `HUMAN_REVIEW`), a confidence level (`high`/`medium`/`low`), and a one-sentence reasoning
-
-**Tag definitions:**
-- **KU** — Student recalls a fact or executes a procedure with no real-world context
-- **AP** — Student applies a skill to a real-world scenario and interprets the result
-- **TH** — Student evaluates a claim, spots an error, or reasons about a method
-- **HUMAN_REVIEW** — Image-only question with no readable text
+Built by Niall Simmons, Curriculum Manager at MagmaMath, to support the Canadian curriculum initiative.
 
 ---
 
-## Files
+## What this tool does
 
-### `index.html`
-A self-contained single-page web app. Open it in a browser (or host it anywhere) and it runs entirely client-side.
+MagmaMath currently tags all questions as **Mild / Medium / Spicy** (levels 1–3). For the Canadian (Ontario) market, educators and the EQAO assessment framework use a different taxonomy: **KU / AP / TH**. These describe the *type* of thinking required, not just difficulty.
 
-**Features:**
-- **Batch tagger** — enter a section ID, fetch all questions, tag them all with a live progress bar
-- **Single question checker** — paste any question text for an instant tag
-- Credentials (JWT token + Anthropic API key) are saved in `localStorage` so you only enter them once
-- Live results table with tag badges and confidence indicators
-- Export results to CSV
-
-**Requires:**
-- A MagmaMath JWT token (from browser DevTools → Network → any `api.magmamath.com` request → `Authorization` header, after `JWT `)
-- An Anthropic API key (`sk-ant-…`) from [console.anthropic.com](https://console.anthropic.com)
-
-### `magma_tagger.py`
-A terminal-based Python script that does the same thing as the web app but outputs to the terminal with colour-coded results and saves a CSV to your Desktop.
-
-**Requirements:**
-```bash
-pip3 install requests anthropic
-```
-
-**Usage:**
-```bash
-python3 magma_tagger.py
-```
-
-The script prompts for your JWT token, Anthropic API key, and section ID. Credentials are saved to `~/.magma_tagger_config.json` (mode `0600`) so subsequent runs can reuse them.
-
-Output is saved to `~/Desktop/magma_tags_<sectionId>_<timestamp>.csv`.
+This tool:
+- Classifies individual questions as KU, AP, or TH using an AI model
+- Fetches entire sections from the MagmaMath API and classifies every question in bulk
+- Exports results as CSV for analysis
+- (In progress) Analyses entire books (book → chapter → section hierarchy)
+- (In progress) Runs evals against officially-labelled EQAO questions to validate accuracy
+- (In progress) Correlates KU/AP/TH tags with the existing Mild/Medium/Spicy (1/2/3) levels
 
 ---
 
-## Known issue: Anthropic API CORS restriction
+## Project structure
 
-**The `index.html` browser app only works when served from an HTTP/HTTPS URL — it will not work when opened as a local `file://` path.**
+```
+magma-tagger/
+├── index.html          # Browser-based UI (hosted on GitHub Pages)
+├── README.md           # This file
+├── TAGGING_GUIDE.md    # Full KU/AP/TH classification criteria
+├── ROADMAP.md          # Phased development plan
+└── CLAUDE.md           # Instructions for Claude Code sessions
+```
 
-The Anthropic API requires the request header `anthropic-dangerous-direct-browser-access: true` for direct browser calls. When making this request from a `file://` origin, browsers enforce stricter CORS rules and the preflight request fails, causing a timeout or network error before the API is ever reached.
+---
 
-**Workaround:** Host `index.html` anywhere — GitHub Pages, Netlify, a local dev server, or even VS Code Live Server. The Python script (`magma_tagger.py`) is unaffected and works from the terminal without any hosting requirement.
+## Setup
 
-### What needs to be investigated
+### Prerequisites
+- Node.js (v18+)
+- An Anthropic API key (`sk-ant-...`) — get one at console.anthropic.com
+- A MagmaMath JWT token (from browser DevTools after logging into WebAdmin)
 
-- **Why exactly does the `file://` origin trigger a timeout rather than a clear CORS error?** The browser may be silently dropping the preflight instead of returning a meaningful error, which makes debugging harder.
-- **Is there a way to make it work locally without a server?** Options to explore: a lightweight local proxy (e.g. a tiny Express or Python HTTP server that forwards to the Anthropic API and adds the right headers), or packaging `index.html` as an Electron/Tauri app that bypasses browser CORS entirely.
-- **Does the `anthropic-dangerous-direct-browser-access` header behave differently across browsers?** Initial testing was done in Chrome; Safari and Firefox may surface a clearer error or have different preflight behaviour.
+### Environment variables
+
+Create a `.env` file in the project root:
+
+```
+ANTHROPIC_API_KEY=sk-ant-your-key-here
+MAGMA_JWT=eyJhbGci...your-jwt-here
+```
+
+The JWT expires regularly. To refresh it:
+1. Log in to `admin.magmamath.com`
+2. Open Chrome DevTools → Network tab
+3. Make any request and copy the `Authorization: Bearer ...` header value
+
+### Run locally
+
+```bash
+# Install dependencies
+npm install
+
+# Start the local server
+npm start
+
+# Then open http://localhost:3000
+```
+
+---
+
+## The MagmaMath API
+
+Base URL: `https://api.magmamath.com`
+
+All requests require: `Authorization: Bearer <JWT>`
+
+### Key endpoints
+
+#### Get a section's questions
+```
+GET /v2/sections/{sectionId}?fetchAll=1
+```
+Returns all questions in a section. Each question object includes:
+- `_id` — question ID
+- `problem` — the question text (may contain LaTeX)
+- `level` — difficulty: `1` (Mild), `2` (Medium), `3` (Spicy)
+- `imageId` or `cdn-id` — image reference if the question has a diagram
+
+#### Get a book's structure
+```
+GET /v2/books/{bookId}
+```
+Returns the book with nested chapters and section IDs.
+
+### Content hierarchy
+
+```
+Book
+└── Chapter
+    └── Section
+        └── Question (has: text, level 1/2/3, imageId)
+```
+
+A **book** is the top-level curriculum unit (e.g. "Grade 6 Ontario"). Books contain **chapters** (e.g. "Number Sense"), which contain **sections** (e.g. "B1.2 Compare and order whole numbers"). Sections contain the individual **questions**.
+
+### Image handling
+
+Some questions include diagrams. Images are referenced by a `cdn-id`. To get the alt text (accessible text description) for classification purposes:
+```
+GET /v2/images/{imageId}
+```
+Returns an object with an `altText` field — pass this to the classifier alongside the question text.
+
+---
+
+## How the tagger works
+
+The tagger sends each question to the Anthropic API (`claude-sonnet-4-20250514`) with a system prompt containing the full KU/AP/TH classification criteria (see `TAGGING_GUIDE.md`).
+
+The model returns:
+- The tag: `KU`, `AP`, or `TH`
+- A short reasoning explanation
+- The key signal that determined the tag
+
+The prompt is designed to mirror the decision framework in the EQAO TAG Level Guidance document.
+
+---
+
+## The live web version
+
+The tool is also hosted publicly at:
+**`https://niall-magma.github.io/magma-tagger/`**
+
+This requires a Gemini API key (free tier available) rather than Anthropic. The hosted version is for lightweight use — for bulk analysis and CLI workflows, use this local version.
+
+---
+
+## Who can use this
+
+Any MagmaMath team member can clone this repo and run it locally. They need:
+1. Their own Anthropic API key
+2. A valid MagmaMath JWT (refreshed from DevTools)
+
+Share access by pointing them to this repo on GitHub — they clone it, add their `.env`, and run `npm start`.
