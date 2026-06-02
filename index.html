@@ -600,8 +600,12 @@
     </div>
   </div>
 
-  <!-- API Key (hidden — key is hardcoded) -->
-  <input type="hidden" id="apiKey" value="AIzaSyA4StP0kZdsEqbRBwej8ZhvAF7-yeXOeXI" />
+  <!-- API Key -->
+  <div class="card">
+    <div class="card-label">Gemini API Key</div>
+    <input type="password" id="apiKey" placeholder="AIza..." autocomplete="off" />
+    <p class="input-hint">Stored only in your browser. Never leaves your device except to call the Gemini API.</p>
+  </div>
 
   <!-- Tabs -->
   <div class="tabs">
@@ -685,12 +689,16 @@ const TAG_STYLE = {
   TH: { bg: 'var(--th-bg)', border: 'var(--th-border)', text: 'var(--th-text)', full: 'Thinking' }
 };
 
+// Persist API key
 const keyInput = document.getElementById('apiKey');
+keyInput.value = localStorage.getItem('magma_gemini_key') || '';
+keyInput.addEventListener('input', () => localStorage.setItem('magma_gemini_key', keyInput.value.trim()));
+
 function getKey() { return keyInput.value.trim(); }
 
 async function callClaude(userMsg) {
   const key = getKey();
-  if (!key) throw new Error('API key missing.');
+  if (!key) throw new Error('Please enter your Gemini API key above.');
   const fullPrompt = SYSTEM + '\n\n' + userMsg;
   const res = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-3.5-flash:generateContent?key=${key}`, {
     method: 'POST',
@@ -704,11 +712,21 @@ async function callClaude(userMsg) {
   const d = await res.json();
   const parts = d.candidates?.[0]?.content?.parts || [];
   const text = parts.map(p => p.text || '').join('');
-  // Extract JSON by finding first { and last } — robust against any wrapping
   const start = text.indexOf('{');
-  const end = text.lastIndexOf('}');
-  if (start === -1 || end === -1) throw new Error('No JSON found. Raw: ' + text.slice(0, 300));
-  return JSON.parse(text.slice(start, end + 1));
+  if (start === -1) throw new Error('No JSON found. Raw: ' + text.slice(0, 300));
+  // Walk braces to find the matching closing } — handles { or } inside string values
+  let depth = 0, inStr = false, esc = false;
+  for (let i = start; i < text.length; i++) {
+    const c = text[i];
+    if (esc) { esc = false; continue; }
+    if (c === '\\' && inStr) { esc = true; continue; }
+    if (c === '"') { inStr = !inStr; continue; }
+    if (!inStr) {
+      if (c === '{') depth++;
+      else if (c === '}' && --depth === 0) return JSON.parse(text.slice(start, i + 1));
+    }
+  }
+  throw new Error('Incomplete JSON. Raw: ' + text.slice(0, 300));
 }
 
 function classifyPrompt(q) {
@@ -724,16 +742,7 @@ function convertPrompt(q, from, to) {
     'TH->KU':'Give the method or formula explicitly. Remove all planning, sequencing, or comparison. Single direct execution only.',
     'TH->AP':'Remove the multi-step planning or comparison requirement. Embed the core skill in a scenario where the student selects and applies ONE method to reach a single result.'
   };
-  return `Rewrite this ${from} math question as a ${to} question. Same numbers and concept.
-
-Original: ${q}
-
-Rule: ${rules[from+'->'+to]}
-
-Reply with ONLY this JSON (no markdown, no extra text):
-{"question":"...","options":["A) ...","B) ...","C) ...","D) ..."],"answer":"B) 56","explanation":"..."}
-
-Use null for options if open response. Keep it concise.`;
+  return `Rewrite this ${from} Ontario math question as a ${to} question. Keep the same numbers and concept. Rule: ${rules[from+'->'+to]}\n\nOriginal: ${q}\n\nRespond with valid JSON only, no markdown:\n{"question":"...","options":["A) ...","B) ...","C) ...","D) ..."],"answer":"B) 56","explanation":"..."}\n\nSet options to null if open response. Be concise.`;
 }
 
 function showError(elId, msg) {
@@ -908,7 +917,7 @@ async function runBatch() {
 
   if (!sectionId) { showError('batchError', 'Please enter a section ID.'); return; }
   if (!jwt) { showError('batchError', 'Please enter your MagmaMath JWT token.'); return; }
-  if (!getKey()) { showError('batchError', 'API key missing.'); return; }
+  if (!getKey()) { showError('batchError', 'Please enter your Gemini API key above.'); return; }
 
   document.getElementById('batchBtn').disabled = true;
   document.getElementById('stopBtn').style.display = '';
