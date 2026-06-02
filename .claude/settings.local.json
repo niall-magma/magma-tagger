@@ -9,7 +9,18 @@
       "Bash(node --check /Users/niallsimmons/Desktop/magma-tagger/server.js)",
       "Bash(git check-ignore *)",
       "Bash(git push *)",
-      "Bash(node *)"
+      "Bash(node *)",
+      "Bash(git commit *)",
+      "Bash(brew install *)",
+      "Bash(pdftoppm -v)",
+      "Bash(pdftotext \"/Users/niallsimmons/Downloads/math-resource-released-questions-g6-2025.pdf\" -)",
+      "Bash(cp \"/Users/niallsimmons/Downloads/math-resource-released-questions-g6-2025.pdf\" /Users/niallsimmons/Desktop/magma-tagger/tmp_g6.pdf)",
+      "Bash(cp \"/Users/niallsimmons/Downloads/math-resource-released-questions-g9-25 \\(1\\).pdf\" /Users/niallsimmons/Desktop/magma-tagger/tmp_g9.pdf)",
+      "Bash(cp \"/Users/niallsimmons/Downloads/document_pdf.pdf\" /Users/niallsimmons/Desktop/magma-tagger/tmp_doc.pdf)",
+      "Bash(pdftotext \"/Users/niallsimmons/Desktop/magma-tagger/GRADE 3 EQAO RELEASED.pdf\" -)",
+      "Bash(pdftotext \"/Users/niallsimmons/Desktop/magma-tagger/GRADE 6 EQAO RELEASED.pdf\" -)",
+      "Bash(pdftotext \"/Users/niallsimmons/Desktop/magma-tagger/GRADE 9 EQAO RELEASED.pdf\" -)",
+      "Bash(open *)"
     ]
   }
 }

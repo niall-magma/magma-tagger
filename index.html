@@ -600,12 +600,8 @@
     </div>
   </div>
 
-  <!-- API Key -->
-  <div class="card">
-    <div class="card-label">Gemini API Key</div>
-    <input type="password" id="apiKey" placeholder="AIza..." autocomplete="off" />
-    <p class="input-hint">Stored only in your browser. Never leaves your device except to call the Gemini API.</p>
-  </div>
+  <!-- API Key (hidden — key is hardcoded) -->
+  <input type="hidden" id="apiKey" value="AIzaSyA4StP0kZdsEqbRBwej8ZhvAF7-yeXOeXI" />
 
   <!-- Tabs -->
   <div class="tabs">
@@ -675,12 +671,12 @@ Critical distinctions:
 KU/AP/TH are cognitive types, NOT difficulty levels.`;
 
 const CONVERT_GUIDANCE = {
-  'KU->AP': 'Add a realistic Ontario context using diverse names (Amara, Kofi, Priya, Dawit, Selin, Yuki) and metric units. The context must force the student to decide what operation to use — not just a name wrapper around the same calculation.',
-  'KU->TH': 'Create a scenario where a fictional student has made a specific claim or error about this concept. Ask the student to evaluate whether the claim is correct and explain why.',
-  'AP->KU': 'Strip the scenario entirely. Reduce to the bare mathematical operation or fact. Make it completely context-free and direct.',
-  'AP->TH': 'Keep the mathematical content but restructure so a fictional student has made a claim about the answer or method. Ask the student to evaluate and explain rather than solve.',
-  'TH->KU': 'Strip all evaluative framing. Extract the core mathematical skill and write a direct context-free question about it.',
-  'TH->AP': 'Remove the error-spotting framing. Embed the same skill in a realistic Ontario scenario where the student applies it directly.'
+  'KU->AP': 'Remove the explicitly given procedure or formula so the student must decide which operation to apply. Either add a scenario that requires a decision, or simply remove the given rule so the student must choose — a named-person wrapper that leaves the method unchanged is NOT enough.',
+  'KU->TH': 'Restructure so the student must plan multiple operations in sequence (non-obvious multi-step), OR present several cases and ask the student to compare/evaluate the results. TH is not limited to error-spotting — multi-step planning and comparison questions also qualify.',
+  'AP->KU': 'Give the procedure or formula explicitly in the stem so the student just substitutes or executes a single known operation. Remove any need to decide which operation to use.',
+  'AP->TH': 'Restructure so the student must compare results across multiple separate calculations, OR requires genuinely non-obvious multi-step planning where operations are not immediately obvious. Alternatively, give a result or claim and ask the student to verify or evaluate it with reasoning.',
+  'TH->KU': 'Give the method or formula explicitly. Remove all need to plan, sequence, or compare. Make it a single direct execution with no ambiguity about what to do.',
+  'TH->AP': 'Remove the multi-step planning or comparison requirement. Embed the core skill in a scenario where the student selects and applies ONE method to reach a single result.'
 };
 
 const TAG_STYLE = {
@@ -689,16 +685,12 @@ const TAG_STYLE = {
   TH: { bg: 'var(--th-bg)', border: 'var(--th-border)', text: 'var(--th-text)', full: 'Thinking' }
 };
 
-// Persist API key
 const keyInput = document.getElementById('apiKey');
-keyInput.value = localStorage.getItem('magma_gemini_key') || '';
-keyInput.addEventListener('input', () => localStorage.setItem('magma_gemini_key', keyInput.value.trim()));
-
 function getKey() { return keyInput.value.trim(); }
 
 async function callClaude(userMsg) {
   const key = getKey();
-  if (!key) throw new Error('Please enter your Gemini API key above.');
+  if (!key) throw new Error('API key missing.');
   const fullPrompt = SYSTEM + '\n\n' + userMsg;
   const res = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-3.5-flash:generateContent?key=${key}`, {
     method: 'POST',
@@ -725,12 +717,12 @@ function classifyPrompt(q) {
 
 function convertPrompt(q, from, to) {
   const rules = {
-    'KU->AP':'Wrap in a real Ontario scenario (diverse name, metric units). Context must force the student to decide the operation.',
-    'KU->TH':'A fictional student makes a wrong claim about this. Ask if they are correct and why.',
-    'AP->KU':'Remove all context. Just ask for the bare calculation directly.',
-    'AP->TH':'A fictional student claims an answer. Ask if correct and why.',
-    'TH->KU':'Remove all evaluation. Ask the bare calculation directly.',
-    'TH->AP':'Remove error-spotting. Embed the skill in an Ontario real-world scenario.'
+    'KU->AP':'Remove the given procedure/formula so the student must decide which operation applies. Add a scenario that forces a decision, or remove the given rule — a name wrapper that leaves the method unchanged is not enough.',
+    'KU->TH':'Require the student to plan multiple operations in sequence (non-obvious multi-step), OR present several cases to compare/evaluate. TH is not limited to error-spotting.',
+    'AP->KU':'Give the procedure or formula explicitly so the student just substitutes or executes one known operation. Remove any need to decide what to do.',
+    'AP->TH':'Make the student compare results across multiple separate calculations, OR require genuinely non-obvious multi-step planning. Alternatively, present a claim/result and ask the student to verify it with reasoning.',
+    'TH->KU':'Give the method or formula explicitly. Remove all planning, sequencing, or comparison. Single direct execution only.',
+    'TH->AP':'Remove the multi-step planning or comparison requirement. Embed the core skill in a scenario where the student selects and applies ONE method to reach a single result.'
   };
   return `Rewrite this ${from} math question as a ${to} question. Same numbers and concept.
 
@@ -916,7 +908,7 @@ async function runBatch() {
 
   if (!sectionId) { showError('batchError', 'Please enter a section ID.'); return; }
   if (!jwt) { showError('batchError', 'Please enter your MagmaMath JWT token.'); return; }
-  if (!getKey()) { showError('batchError', 'Please enter your Gemini API key above.'); return; }
+  if (!getKey()) { showError('batchError', 'API key missing.'); return; }
 
   document.getElementById('batchBtn').disabled = true;
   document.getElementById('stopBtn').style.display = '';

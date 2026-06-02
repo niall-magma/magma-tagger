@@ -1,0 +1,186 @@
+{
+  "accuracy": "94.4",
+  "correct": 17,
+  "total": 18,
+  "confusion": {
+    "KU": {
+      "KU": 6,
+      "AP": 0,
+      "TH": 0
+    },
+    "AP": {
+      "KU": 1,
+      "AP": 5,
+      "TH": 0
+    },
+    "TH": {
+      "KU": 0,
+      "AP": 0,
+      "TH": 6
+    }
+  },
+  "results": [
+    {
+      "id": "ku-01",
+      "label": "KU",
+      "predicted": "KU",
+      "pass": true,
+      "reasoning": "The student directly executes a basic multiplication procedure with no real-world context.",
+      "key_signal": "What is 7 × 5?",
+      "question": "What is 7 × 5?"
+    },
+    {
+      "id": "ku-02",
+      "label": "KU",
+      "predicted": "KU",
+      "pass": true,
+      "reasoning": "The student recalls the meaning of comparison symbols and applies the procedure of comparing two numbers directly with no real-world context.",
+      "key_signal": "Which symbol correctly completes",
+      "question": "Which symbol correctly completes 473 __ 437?\nA) >\nB) <\nC) =\nD) ≠"
+    },
+    {
+      "id": "ku-03",
+      "label": "KU",
+      "predicted": "KU",
+      "pass": true,
+      "reasoning": "The student is asked to recall and execute a basic mathematical procedure (calculating an exponent) with no real-world context.",
+      "key_signal": "What is the value of 6²",
+      "question": "What is the value of 6² ?"
+    },
+    {
+      "id": "ku-04",
+      "label": "KU",
+      "predicted": "KU",
+      "pass": true,
+      "reasoning": "The student must recall the definition of prime numbers and identify which number has exactly two factors (1 and itself).",
+      "key_signal": "Which of the following is a prime number?",
+      "question": "Which of the following is a prime number?\nA) 9\nB) 15\nC) 17\nD) 21"
+    },
+    {
+      "id": "ku-05",
+      "label": "KU",
+      "predicted": "KU",
+      "pass": true,
+      "reasoning": "The student is asked to recall the definition of a variable in an algebraic expression, which is a basic mathematical concept with no real-world context or scenario to interpret.",
+      "key_signal": "what does n represent?",
+      "question": "In the expression n + 7, what does n represent?\nA) A fixed value of 7\nB) An unknown value that can change\nC) The answer to the expression\nD) A label for a shape"
+    },
+    {
+      "id": "ku-06",
+      "label": "KU",
+      "predicted": "KU",
+      "pass": true,
+      "reasoning": "The student is given a specific rule and must execute a direct procedure to find a term in a sequence with no real-world context.",
+      "key_signal": "The rule is given directly in the stem and the student just applies it systematically",
+      "question": "The rule is 'add 3.' What is the 4th term if the first term is 5?"
+    },
+    {
+      "id": "ap-01",
+      "label": "AP",
+      "predicted": "AP",
+      "pass": true,
+      "reasoning": "The student must interpret a real-world scenario involving a named person (Aisha) and her tiles, decide to use multiplication, and execute the calculation.",
+      "key_signal": "Named person 'Aisha' in a real-world scenario with tiles",
+      "question": "Aisha has 7 groups of 5 tiles. How many tiles does she have in total?"
+    },
+    {
+      "id": "ap-02",
+      "label": "AP",
+      "predicted": "AP",
+      "pass": true,
+      "reasoning": "The student must interpret a real-world scenario involving Amara's earnings and spending, decide to subtract the expenses from earnings, and execute the calculation.",
+      "key_signal": "Named person 'Amara' in a real-world scenario about babysitting earnings and spending",
+      "question": "Amara earns $150 babysitting and spends $48 on art supplies. How much money does she have left?"
+    },
+    {
+      "id": "ap-03",
+      "label": "AP",
+      "predicted": "AP",
+      "pass": true,
+      "reasoning": "The student must interpret a real-world scenario involving a carpenter and plank, decide to subtract the cut piece from the total length, and execute the calculation.",
+      "key_signal": "A carpenter cuts off a piece from a plank - this is a real-world context requiring interpretation and application",
+      "question": "A plank is 3.45 m long. A carpenter cuts off a piece that is 1.8 m. How long is the remaining piece?"
+    },
+    {
+      "id": "ap-04",
+      "label": "AP",
+      "predicted": "AP",
+      "pass": true,
+      "reasoning": "The student must read a real-world scenario about a school distributing markers, decide to multiply then divide, execute the calculations, and interpret the result in context.",
+      "key_signal": "A school buys 24 boxes of markers... divide all the markers equally among 8 classrooms",
+      "question": "A school buys 24 boxes of markers. Each box contains 12 markers. The school wants to divide all the markers equally among 8 classrooms. How many markers does each classroom receive?"
+    },
+    {
+      "id": "ap-05",
+      "label": "AP",
+      "predicted": "KU",
+      "pass": false,
+      "reasoning": "The student executes a direct procedure to find a term in an arithmetic sequence with no real-world context.",
+      "key_signal": "What is the 20th term of the pattern",
+      "question": "What is the 20th term of the pattern 5, 8, 11, 14...?"
+    },
+    {
+      "id": "ap-06",
+      "label": "AP",
+      "predicted": "AP",
+      "pass": true,
+      "reasoning": "This presents a real-world scenario with a named person (Kofi) where the student must interpret the savings situation, set up an inequality or equation, and solve to find when he reaches his goal.",
+      "key_signal": "Named person 'Kofi' in a real-world savings scenario requiring interpretation and application of mathematical reasoning",
+      "question": "Kofi saves $12 each week. After how many weeks will he have saved at least $100?"
+    },
+    {
+      "id": "th-01",
+      "label": "TH",
+      "predicted": "TH",
+      "pass": true,
+      "reasoning": "The student must evaluate Dawit's claim about comparing decimals and explain whether his reasoning is correct or incorrect.",
+      "key_signal": "Dawit says... Is he correct? Explain your reasoning.",
+      "question": "Dawit says that 0.6 is greater than 0.62 because 6 is greater than 62. Is he correct? Explain your reasoning."
+    },
+    {
+      "id": "th-02",
+      "label": "TH",
+      "predicted": "TH",
+      "pass": true,
+      "reasoning": "The student must evaluate whether a given claim about the 20th term is correct, rather than simply calculating the term themselves.",
+      "key_signal": "A student says... Is she correct?",
+      "question": "A student says the 20th term of the pattern 5, 8, 11, 14... is 62. Is she correct? Show your work."
+    },
+    {
+      "id": "th-03",
+      "label": "TH",
+      "predicted": "TH",
+      "pass": true,
+      "reasoning": "The student must evaluate which explanation correctly justifies why the distributive property equation is true, requiring reasoning about mathematical concepts rather than just executing a procedure.",
+      "key_signal": "Which of the following correctly explains why",
+      "question": "Which of the following correctly explains why 2 × (3 + 4) = 2 × 3 + 2 × 4?\nA) Because multiplication always comes before addition\nB) Because the distributive property states that multiplying a sum is the same as multiplying each addend separately\nC) Because 7 + 7 = 14 and 6 + 8 = 14\nD) Because the order of operations requires brackets first"
+    },
+    {
+      "id": "th-04",
+      "label": "TH",
+      "predicted": "TH",
+      "pass": true,
+      "reasoning": "The student must evaluate Marcus's claim about multiplication by zero and determine which example proves his statement is incorrect.",
+      "key_signal": "Marcus says... Which of the following shows he is incorrect?",
+      "question": "Marcus says that any number multiplied by 0 gives that same number. Which of the following shows he is incorrect?\nA) 5 × 0 = 0\nB) 0 × 0 = 0\nC) 1 × 0 = 1\nD) 10 × 1 = 10"
+    },
+    {
+      "id": "th-05",
+      "label": "TH",
+      "predicted": "TH",
+      "pass": true,
+      "reasoning": "The student must work backwards from a given result ($240) to find the original amount, which is a thinking/reasoning process.",
+      "key_signal": "Working backwards from the result '$240 is 3 times the amount they had last month' to find the original amount",
+      "question": "After collecting donations, a charity has $240. This is 3 times the amount they had last month. How much did they have last month?"
+    },
+    {
+      "id": "th-06",
+      "label": "TH",
+      "predicted": "TH",
+      "pass": true,
+      "reasoning": "The student must evaluate and compare two different methods to determine which are correct, rather than executing a calculation.",
+      "key_signal": "Which student used a correct method? - asking for evaluation of mathematical approaches",
+      "question": "Two students each solve the problem: 'Find 25% of 80.' Student A writes 80 ÷ 4 = 20. Student B writes 80 × 0.25 = 20. Which student used a correct method?\nA) Only Student A\nB) Only Student B\nC) Both students used a correct method\nD) Neither student used a correct method"
+    }
+  ]
+}

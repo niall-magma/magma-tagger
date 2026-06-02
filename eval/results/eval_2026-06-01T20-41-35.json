@@ -1,0 +1,486 @@
+{
+  "accuracy": "69.0",
+  "correct": 29,
+  "total": 42,
+  "confusion": {
+    "KU": {
+      "KU": 13,
+      "AP": 1,
+      "TH": 1
+    },
+    "AP": {
+      "KU": 4,
+      "AP": 5,
+      "TH": 7
+    },
+    "TH": {
+      "KU": 0,
+      "AP": 0,
+      "TH": 11
+    }
+  },
+  "results": [
+    {
+      "id": "g3-q1",
+      "grade": 3,
+      "source": "EQAO Grade 3 November 2025",
+      "label": "KU",
+      "predicted": "KU",
+      "pass": true,
+      "reasoning": "The student simply recalls the conventional way to write the number 35 in words, which is a direct knowledge/understanding fact.",
+      "key_signal": "Identifying the correct word form of a given number is a direct recall of a known fact.",
+      "question": "Which option shows the correct way to write 35 in words?\nA) three-five\nB) thirty-five\nC) five-three\nD) fifty-three"
+    },
+    {
+      "id": "g3-q2",
+      "grade": 3,
+      "source": "EQAO Grade 3 November 2025",
+      "label": "AP",
+      "predicted": "KU",
+      "pass": false,
+      "reasoning": "The student simply compares the given numbers and identifies the least and greatest, which is a direct recall/comparison of number values requiring a single known operation.",
+      "key_signal": "Selecting and ordering two numbers from a set by magnitude is a direct comparison with no procedure to choose.",
+      "question": "From the numbers 299, 330, 305, 309, 311, 328 — select two numbers to place in order from least to greatest:\nLeast: ___ Greatest: ___"
+    },
+    {
+      "id": "g3-q3",
+      "grade": 3,
+      "source": "EQAO Grade 3 November 2025",
+      "label": "KU",
+      "predicted": "KU",
+      "pass": true,
+      "reasoning": "This is a direct arithmetic operation with no context or decision-making required — the student simply adds two numbers.",
+      "key_signal": "The procedure is fully specified ('95 + 19') and requires a single known operation with no ambiguity.",
+      "question": "What is 95 + 19?\nA) 104\nB) 114\nC) 115\nD) 120"
+    },
+    {
+      "id": "g3-q4",
+      "grade": 3,
+      "source": "EQAO Grade 3 November 2025",
+      "label": "AP",
+      "predicted": "AP",
+      "pass": true,
+      "reasoning": "The student must decide to use division (15 ÷ 3) based on the context; the operation is not given.",
+      "key_signal": "The word problem requires the student to select division as the appropriate operation.",
+      "question": "There are 15 students in the gym. The teacher puts the students into groups of 3. How many groups are there?\nA) 4 groups\nB) 5 groups\nC) 6 groups\nD) 12 groups"
+    },
+    {
+      "id": "g3-q5",
+      "grade": 3,
+      "source": "EQAO Grade 3 November 2025",
+      "label": "TH",
+      "predicted": "TH",
+      "pass": true,
+      "reasoning": "The student must plan and sequence multiple operations: multiply 5×6 to find Raven's total, multiply 2×8 to find Mario's total, then subtract to find the difference — requiring selection and sequencing of different tools.",
+      "key_signal": "'How many more tiles in total' requires two separate multiplications followed by a subtraction — a multi-step plan.",
+      "question": "Raven has 5 groups of tiles with 6 tiles in each group. Mario has 2 groups of tiles with 8 tiles in each group. How many more tiles in total does Raven have than Mario?\nA) 10 tiles\nB) 14 tiles\nC) 16 tiles\nD) 30 tiles"
+    },
+    {
+      "id": "g3-q7",
+      "grade": 3,
+      "source": "EQAO Grade 3 November 2025",
+      "label": "TH",
+      "predicted": "TH",
+      "pass": true,
+      "reasoning": "The student must reason about the gaps between known terms to deduce the pattern rule, which requires multi-step thinking (identifying positions, calculating differences, and verifying consistency) rather than simply applying a given rule.",
+      "key_signal": "The rule is not given — the student must figure it out by reasoning across multiple gaps between non-consecutive known values.",
+      "question": "What is the pattern rule for this pattern?\n17, __ , __ , 29, __ , __ , __ , 45, ...\nA) +4\nB) +6\nC) +12\nD) +16"
+    },
+    {
+      "id": "g3-q8",
+      "grade": 3,
+      "source": "EQAO Grade 3 November 2025",
+      "label": "KU",
+      "predicted": "KU",
+      "pass": true,
+      "reasoning": "The student must recall the meaning of multiplication and identify the equivalent repeated addition expression, a single direct knowledge check.",
+      "key_signal": "Recognizing that 2 × 8 means 8 added 2 times (8 + 8), requiring only recall of the definition of multiplication.",
+      "question": "Which expression is equal to 2 × 8?\nA) 8 + 2\nB) 2 + 8\nC) 2 + 2 + 2 + 2\nD) 8 + 8"
+    },
+    {
+      "id": "g3-q9",
+      "grade": 3,
+      "source": "EQAO Grade 3 November 2025",
+      "label": "TH",
+      "predicted": "TH",
+      "pass": true,
+      "reasoning": "The student must reason about and select the correct operation for each equation by evaluating multiple possibilities, requiring logical reasoning and comparison across cases rather than applying a single given procedure.",
+      "key_signal": "The student must determine which operation makes both sides equal for each blank, requiring reasoning and evaluation rather than executing a directly provided procedure.",
+      "question": "Select the correct operation (+, −, ×, or ÷) to fill in each blank so that both sides are equal:\n20 ÷ 4 = 1 ___ 5\n16 − 8 = 6 ___ 2\n2 × 3 = 30 ___ 5"
+    },
+    {
+      "id": "g3-q10",
+      "grade": 3,
+      "source": "EQAO Grade 3 November 2025",
+      "label": "AP",
+      "predicted": "AP",
+      "pass": true,
+      "reasoning": "The student must select the appropriate loop construct and correct parameters to replicate the described repeated operation, deciding which coding tool fits the problem.",
+      "key_signal": "The student must identify which loop structure (repeat 3 times / add 5) correctly models the described action, choosing the right coding construct.",
+      "question": "A line of code is used to add 5 to a number 3 times. What line of code could be used to create a loop to 'add 5 to number' 3 times?\nA) repeat 5 times / add 3 to number\nB) forever / add 5 to number\nC) repeat 5 times / add 2 to number\nD) repeat 3 times / add 5 to number"
+    },
+    {
+      "id": "g3-q11",
+      "grade": 3,
+      "source": "EQAO Grade 3 November 2025",
+      "label": "KU",
+      "predicted": "KU",
+      "pass": true,
+      "reasoning": "The student simply reads the table and compares the four values directly to identify the true statement, with no calculation or procedure selection required.",
+      "key_signal": "Values are directly given in the table and the student just compares them.",
+      "question": "This table shows the total number of students at four different schools:\nGreen Valley School: 240\nElmhurst School: 310\nOak View School: 204\nLinkshore School: 301\nWhich statement is true?\nA) Linkshore School has the most students\nB) Green Valley School has the fewest students\nC) Linkshore School has fewer students than Oak View School\nD) Elmhurst School has more students than Oak View School"
+    },
+    {
+      "id": "g3-q14",
+      "grade": 3,
+      "source": "EQAO Grade 3 November 2025",
+      "label": "KU",
+      "predicted": "KU",
+      "pass": true,
+      "reasoning": "The student must recall and identify three-dimensional shapes by their properties, matching real-world objects to geometric names — a single knowledge/recognition task.",
+      "key_signal": "Identifying which 3D shapes correspond to a can of soup and a tissue box by their defining properties.",
+      "question": "What three-dimensional objects are the same as a can of soup and a tissue box?\nA) a cylinder and a prism\nB) a cone and a prism\nC) a pyramid and a cylinder\nD) a cube and a pyramid"
+    },
+    {
+      "id": "g3-q15",
+      "grade": 3,
+      "source": "EQAO Grade 3 November 2025",
+      "label": "AP",
+      "predicted": "KU",
+      "pass": false,
+      "reasoning": "The student must recall the property that a pyramid with 5 triangular faces has a pentagonal base, which is a direct fact/definition about geometric shapes.",
+      "key_signal": "Identifying the base shape of a pyramid from its number of triangular faces is a recall of a known geometric property.",
+      "question": "A pyramid has 5 faces that are triangles. What shape is the base of the pyramid?\nA) square\nB) triangle\nC) hexagon\nD) pentagon"
+    },
+    {
+      "id": "g3-q16",
+      "grade": 3,
+      "source": "EQAO Grade 3 November 2025",
+      "label": "AP",
+      "predicted": "AP",
+      "pass": true,
+      "reasoning": "The student must interpret a proportional relationship from a word problem and decide to multiply to find the equivalent number of small pails for 8 large pails.",
+      "key_signal": "The student must select and apply multiplication using the given ratio (1 large = 2 small) to a new quantity (8 large pails).",
+      "question": "One large orange pail holds the same amount of sand as two small blue pails. How many small pails of sand are needed to fill 8 large pails?\nA) 2 small pails\nB) 8 small pails\nC) 10 small pails\nD) 16 small pails"
+    },
+    {
+      "id": "g3-q18",
+      "grade": 3,
+      "source": "EQAO Grade 3 November 2025",
+      "label": "AP",
+      "predicted": "KU",
+      "pass": false,
+      "reasoning": "Each item requires a single, directly obvious subtraction operation (payment minus cost) with no ambiguity about which operation to use.",
+      "key_signal": "Each row is a straightforward subtraction (e.g., $50 − $41) with the operation implicitly determined by the 'change' context.",
+      "question": "Calculate the correct change for each of these three purchases:\nCost: $41, Payment: $50, Change: ___\nCost: $13, Payment: $20, Change: ___\nCost: $2, Payment: $10, Change: ___"
+    },
+    {
+      "id": "g3-q19",
+      "grade": 3,
+      "source": "EQAO Grade 3 November 2025",
+      "label": "TH",
+      "predicted": "TH",
+      "pass": true,
+      "reasoning": "The student must plan and sequence multiple operations: first add the cost of the calculator and markers, then subtract from forty dollars to find the change.",
+      "key_signal": "Two distinct operations must be planned and sequenced (addition then subtraction) to arrive at the answer.",
+      "question": "A teacher buys a calculator for $14 and a package of markers for $9. The teacher pays with two twenty-dollar bills. How much change should the teacher receive?"
+    },
+    {
+      "id": "g6-q1",
+      "grade": 6,
+      "source": "EQAO Grade 6 November 2025",
+      "label": "KU",
+      "predicted": "KU",
+      "pass": true,
+      "reasoning": "The student simply compares decimal values to identify which falls between two given numbers, a direct recall and comparison task with no ambiguity about the operation.",
+      "key_signal": "Identifying which number falls between two given decimals by direct comparison.",
+      "question": "Which number is between 2.354 and 2.456?\nA) 2.345\nB) 2.402\nC) 2.457\nD) 2.520"
+    },
+    {
+      "id": "g6-q3",
+      "grade": 6,
+      "source": "EQAO Grade 6 November 2025",
+      "label": "KU",
+      "predicted": "KU",
+      "pass": true,
+      "reasoning": "The student must recall the definition of a prime number and identify which values in the list are prime, which is a direct application of a single known fact/definition.",
+      "key_signal": "Identifying prime numbers from a list requires only recalling the definition of a prime number.",
+      "question": "Select the TWO prime numbers.\nA) 11\nB) 21\nC) 24\nD) 42\nE) 43"
+    },
+    {
+      "id": "g6-q4",
+      "grade": 6,
+      "source": "EQAO Grade 6 November 2025",
+      "label": "AP",
+      "predicted": "AP",
+      "pass": true,
+      "reasoning": "The student must decide to apply percentage calculation to a real-world context, selecting the appropriate operation (5% of 200) without being told which procedure to use.",
+      "key_signal": "The student must recognize that '5% of 200' requires multiplying 200 × 0.05, choosing this operation from the context.",
+      "question": "A jar contains 200 marbles, and 5% of the marbles are blue. How many marbles are blue?\nA) 5 marbles\nB) 10 marbles\nC) 20 marbles\nD) 25 marbles"
+    },
+    {
+      "id": "g6-q5",
+      "grade": 6,
+      "source": "EQAO Grade 6 November 2025",
+      "label": "TH",
+      "predicted": "TH",
+      "pass": true,
+      "reasoning": "The student must first calculate Lucas's typing rate (360 ÷ 12 = 30 wpm) and then double it to find Greg's rate — two sequential operations requiring planning.",
+      "key_signal": "Find Lucas's rate first, then multiply by 2 to get Greg's rate — two distinct steps must be sequenced.",
+      "question": "Lucas types 360 words in 12 minutes. Greg types twice as fast as Lucas. How many words per minute does Greg type?\nA) 15 words per minute\nB) 30 words per minute\nC) 60 words per minute\nD) 180 words per minute"
+    },
+    {
+      "id": "g6-q6",
+      "grade": 6,
+      "source": "EQAO Grade 6 November 2025",
+      "label": "AP",
+      "predicted": "TH",
+      "pass": false,
+      "reasoning": "The student must first determine the pattern rule by reasoning from the given term numbers and values (not a rule that is provided), then apply it to find the missing term number — requiring both pattern discovery and calculation.",
+      "key_signal": "The pattern rule is not given; the student must derive it from the data and then work backwards or forwards to find the unknown term number.",
+      "question": "Four term values of a growing pattern are shown:\nTerm number: 5, 7, 9, ___\nTerm value:   11, 15, 19, 27\nWhat is the term number when the term value is 27?\nA) 11\nB) 13\nC) 15\nD) 23"
+    },
+    {
+      "id": "g6-q7",
+      "grade": 6,
+      "source": "EQAO Grade 6 November 2025",
+      "label": "TH",
+      "predicted": "TH",
+      "pass": true,
+      "reasoning": "The student must generate multiple terms for each of three separate patterns and then compare across all three to find the common value, requiring sequencing of repeated operations followed by a comparison step.",
+      "key_signal": "Identifying which number appears in ALL THREE patterns requires generating and comparing multiple sequences simultaneously.",
+      "question": "This table shows a starting number and a rule for three patterns:\nPattern P: starting number = 1, rule = Add 5\nPattern Q: starting number = 66, rule = Subtract 10\nPattern R: starting number = 4, rule = Multiply by 2\nWhich number is in all three patterns?\nA) 8\nB) 16\nC) 26\nD) 36"
+    },
+    {
+      "id": "g6-q8",
+      "grade": 6,
+      "source": "EQAO Grade 6 November 2025",
+      "label": "KU",
+      "predicted": "KU",
+      "pass": true,
+      "reasoning": "The student simply solves a single one-step equation by recalling the inverse operation (division), with no context or decision-making required.",
+      "key_signal": "A single equation '7x = 28' is given and the student applies one known operation to isolate x.",
+      "question": "What value of x makes this equation true?\n7x = 28\nA) 3\nB) 4\nC) 21\nD) 35"
+    },
+    {
+      "id": "g6-q9",
+      "grade": 6,
+      "source": "EQAO Grade 6 November 2025",
+      "label": "TH",
+      "predicted": "TH",
+      "pass": true,
+      "reasoning": "The student must solve four separate equations and then compare the results to identify the greatest value, requiring sequencing of multiple operations followed by a comparison across cases.",
+      "key_signal": "'greatest value' requires solving all four equations and comparing results",
+      "question": "In which equation does p have the greatest value?\nA) 85 + p = 125\nB) 70 − p = 35\nC) 5p = 215\nD) 3p = 132"
+    },
+    {
+      "id": "g6-q11",
+      "grade": 6,
+      "source": "EQAO Grade 6 November 2025",
+      "label": "KU",
+      "predicted": "AP",
+      "pass": false,
+      "reasoning": "The student must decide which type of graph is most appropriate for the given data by applying knowledge of graph types and their uses — the tool (graph type) is not given, the student must select it.",
+      "key_signal": "The phrase 'Which option would best represent this data?' requires the student to evaluate and select the appropriate graphical representation.",
+      "question": "This table shows the number of bags of popcorn sold at an event during different times in a day:\n1:00–2:59: 120 bags\n3:00–4:59: 87 bags\n5:00–6:59: 113 bags\nWhich option would best represent this data?\nA) histogram\nB) line plot\nC) pictograph\nD) multiple-bar graph"
+    },
+    {
+      "id": "g6-q12",
+      "grade": 6,
+      "source": "EQAO Grade 6 November 2025",
+      "label": "TH",
+      "predicted": "TH",
+      "pass": true,
+      "reasoning": "The student must calculate three different statistics (range, median, and mean) each requiring a distinct procedure sequenced across the same dataset.",
+      "key_signal": "Calculating range AND median AND mean from one dataset requires planning and sequencing multiple different operations.",
+      "question": "The height in centimetres of various plants is shown: 16, 21, 21, 31, 32, 34, 41\nComplete each statement:\nThe range is ___ cm.\nThe median is ___ cm.\nThe mean is ___ cm."
+    },
+    {
+      "id": "g6-q16",
+      "grade": 6,
+      "source": "EQAO Grade 6 November 2025",
+      "label": "AP",
+      "predicted": "TH",
+      "pass": false,
+      "reasoning": "The student must reason through the geometric relationship between an acute angle and a counterclockwise measurement, recognizing that the counterclockwise angle from Line A to Line B requires sequencing multiple steps: understanding that lines extend in both directions, determining that the counterclockwise angle is 180° + 48° = 228°... or reasoning that the supplement (132°) or reflex angle (360° - 48° = 312°) must be considered, requiring evaluation of multiple cases.",
+      "key_signal": "The student must plan and sequence multiple geometric reasoning steps to convert an acute angle between two lines into a specific counterclockwise directional measurement.",
+      "question": "The acute angle between Line A and Line B is 48°. What is the angle when measuring counterclockwise from Line A to Line B?\nA) 42°\nB) 132°\nC) 222°\nD) 312°"
+    },
+    {
+      "id": "g6-q18",
+      "grade": 6,
+      "source": "EQAO Grade 6 November 2025",
+      "label": "KU",
+      "predicted": "KU",
+      "pass": true,
+      "reasoning": "The student must recall a financial literacy fact about which payment method charges high interest on unpaid balances.",
+      "key_signal": "Directly recalling a known fact about credit card interest rates with no calculation or decision-making required.",
+      "question": "Which method of payment often has a high interest rate on unpaid balances?\nA) cash\nB) e-transfer\nC) debit card\nD) credit card"
+    },
+    {
+      "id": "g9-q1",
+      "grade": 9,
+      "source": "EQAO Grade 9 November 2025",
+      "label": "KU",
+      "predicted": "KU",
+      "pass": true,
+      "reasoning": "The student must recall definitions of number subsets and identify which ones contain all five given numbers, which is a direct knowledge/understanding task with no multi-step planning required.",
+      "key_signal": "Identifying which subset(s) numbers belong to based on recalled definitions.",
+      "question": "Five numbers are shown: 3/4, -1/3, √3, 6.4, -5.3\nSelect the TWO subsets of the number system that all of these numbers belong to.\nA) the set of integers\nB) the set of irrational numbers\nC) the set of rational numbers\nD) the set of real numbers"
+    },
+    {
+      "id": "g9-q2",
+      "grade": 9,
+      "source": "EQAO Grade 9 November 2025",
+      "label": "TH",
+      "predicted": "TH",
+      "pass": true,
+      "reasoning": "The student must reason about and compare the relative density of two sets by evaluating their properties, which requires critical thinking beyond a single known operation.",
+      "key_signal": "Select the statement that correctly compares the density — requires evaluating and reasoning about the nature of two different sets, not just recalling a fact or applying a single procedure.",
+      "question": "On a number line from 0 to 50, the perfect squares are: 1, 4, 9, 16, 25, 36, 49. Select the statement that correctly compares the density of the set of positive integers between 0 and 50 and the set of perfect squares between 0 and 50.\nA) Both sets are equally dense.\nB) Both sets are equally dense and contain infinitely many numbers.\nC) The set of positive integers is more dense than the set of perfect squares.\nD) The set of positive integers is less dense than the set of perfect squares."
+    },
+    {
+      "id": "g9-q3",
+      "grade": 9,
+      "source": "EQAO Grade 9 November 2025",
+      "label": "KU",
+      "predicted": "KU",
+      "pass": true,
+      "reasoning": "The student applies a single known operation (polynomial division/simplification) directly to the given expression with no ambiguity about which procedure to use.",
+      "key_signal": "A single algebraic expression is given and the student must simplify it using one known rule (dividing monomials).",
+      "question": "What is the simplified form of this expression?\n−36a⁴b⁶ ÷ (−4ab²)\nA) 9a³b⁴\nB) 9a⁴b⁴\nC) −9a³b⁴\nD) −9a⁴b⁴"
+    },
+    {
+      "id": "g9-q4",
+      "grade": 9,
+      "source": "EQAO Grade 9 November 2025",
+      "label": "AP",
+      "predicted": "KU",
+      "pass": false,
+      "reasoning": "The student applies known exponent laws (product and quotient rules) in a single direct simplification, then converts to scientific notation — all procedures are standard and recalled, not chosen from alternatives.",
+      "key_signal": "A single expression to simplify using directly recalled exponent rules with no context requiring the student to select an approach.",
+      "question": "What is the value of this expression in scientific notation?\n(5⁴ × 5⁴ × 5⁻²) ÷ (5³ × 5⁻⁶)\nA) 5 × 10³\nB) 1.25 × 10²\nC) 1.953125 × 10⁶\nD) 1.6384 × 10⁻¹⁰"
+    },
+    {
+      "id": "g9-q5",
+      "grade": 9,
+      "source": "EQAO Grade 9 November 2025",
+      "label": "KU",
+      "predicted": "KU",
+      "pass": true,
+      "reasoning": "The student must directly add two mixed numbers using a single known arithmetic operation with no ambiguity about which operation to use.",
+      "key_signal": "The expression is directly given and the student simply computes 3 2/3 + 2 3/5.",
+      "question": "What is the value of this expression?\n3 2/3 + 2 3/5\nA) 5 5/8\nB) 5 11/15\nC) 6 4/15\nD) 7 3/5"
+    },
+    {
+      "id": "g9-q6",
+      "grade": 9,
+      "source": "EQAO Grade 9 November 2025",
+      "label": "AP",
+      "predicted": "TH",
+      "pass": false,
+      "reasoning": "The student must plan and sequence multiple operations (adding rightward movements, adding leftward movements, then comparing/subtracting the totals) to determine the final position relative to the start.",
+      "key_signal": "Four sequential movements requiring the student to combine and compare results across multiple steps to find a net displacement.",
+      "question": "A student moves in a straight line: 62m to the right, then 41m to the left, then 88m to the right, then 112m to the left. At his final position, where is the student in relation to his initial position?\nA) 3m to the right\nB) 3m to the left\nC) 303m to the right\nD) 303m to the left"
+    },
+    {
+      "id": "g9-q7",
+      "grade": 9,
+      "source": "EQAO Grade 9 November 2025",
+      "label": "KU",
+      "predicted": "KU",
+      "pass": true,
+      "reasoning": "The formula is explicitly given and the student simply substitutes n = 8 into the equation to get a single result.",
+      "key_signal": "The equation P = 24.50n + 15 is provided; the student only needs to substitute and evaluate.",
+      "question": "Mia calculates the pay she earns, P, in dollars, to make n birdhouses, according to this equation:\nP = 24.50n + 15\nWhat is Mia's pay for making 8 birdhouses?\nA) $39.50\nB) $181.00\nC) $196.00\nD) $211.00"
+    },
+    {
+      "id": "g9-q9",
+      "grade": 9,
+      "source": "EQAO Grade 9 November 2025",
+      "label": "AP",
+      "predicted": "AP",
+      "pass": true,
+      "reasoning": "The formula is given, but the student must work backwards (decide to solve for the unknown length using the equation 60 = 2×21 + 2×length) to find the missing value.",
+      "key_signal": "The student must select and apply an inverse operation to find the unknown length, even though the formula is provided.",
+      "question": "This pseudocode calculates and outputs the perimeter of a rectangle:\nperimeter = 2 * width + 2 * length\nIf a user inputs 21 as the width and ___ as the length, the output will be 60 cm.\nA) 9\nB) 18\nC) 39\nD) 162"
+    },
+    {
+      "id": "g9-q10",
+      "grade": 9,
+      "source": "EQAO Grade 9 November 2025",
+      "label": "TH",
+      "predicted": "TH",
+      "pass": true,
+      "reasoning": "The student must reason about the logic of a discount calculation to evaluate which code correctly represents the sale price, requiring critical thinking to compare and eliminate incorrect formulas.",
+      "key_signal": "Selecting the correct line of code by evaluating the logic of four different expressions representing a discount calculation.",
+      "question": "Pierre writes code to calculate the total price of an item after a sale discount. He defines:\n• itemPrice = the initial price of the item\n• percentDiscount = the sale discount in percent\nHe wants a variable 'subtotal' to represent the sale price before taxes. Select the correct line of code:\nA) subtotal = itemPrice * (percentDiscount/100)\nB) subtotal = itemPrice − (percentDiscount/100)\nC) subtotal = itemPrice + (itemPrice * percentDiscount/100)\nD) subtotal = itemPrice − (itemPrice * percentDiscount/100)"
+    },
+    {
+      "id": "g9-q13",
+      "grade": 9,
+      "source": "EQAO Grade 9 November 2025",
+      "label": "KU",
+      "predicted": "TH",
+      "pass": false,
+      "reasoning": "The student must reason about and evaluate each of the four representations to determine which one does not follow a linear pattern, requiring comparison across multiple cases.",
+      "key_signal": "Must analyze all four options and identify the non-linear one by reasoning about the nature of each relationship.",
+      "question": "Three of these options show a linear relationship between T and g. Select the relationship that is NON-linear.\nA) T = 2g + 3\nB) Table: g=0→T=1, g=1→T=2, g=2→T=4, g=3→T=8\nC) Table: g=0→T=7, g=1→T=5, g=2→T=3, g=3→T=1\nD) T = 12 − 4g"
+    },
+    {
+      "id": "g9-q14",
+      "grade": 9,
+      "source": "EQAO Grade 9 November 2025",
+      "label": "AP",
+      "predicted": "TH",
+      "pass": false,
+      "reasoning": "The student must perform two sequential modifications (doubling the slope, then subtracting 5 from the y-intercept) and combine them into a new equation.",
+      "key_signal": "Two separate transformations must be planned and sequenced: doubling the slope AND adjusting the y-intercept.",
+      "question": "A line is represented by the equation y = 6x. The slope doubles, and the y-intercept decreases by 5. What is the equation of the new line?\nA) y = 12x + 5\nB) y = 12x − 5\nC) y = 8x + 5\nD) y = 8x − 5"
+    },
+    {
+      "id": "g9-q18",
+      "grade": 9,
+      "source": "EQAO Grade 9 November 2025",
+      "label": "AP",
+      "predicted": "TH",
+      "pass": false,
+      "reasoning": "The student must evaluate and compare multiple strategies by reasoning about their efficiency and correctness for a large-term pattern, requiring critical thinking to justify which approach is best rather than simply applying a procedure.",
+      "key_signal": "The question asks which strategy 'would be quickest,' requiring the student to reason about and compare the effectiveness of four different approaches for finding the 4257th term.",
+      "question": "A class creates a growing pattern using toothpicks (Figure 1, Figure 2, Figure 3, each figure adds toothpicks in a consistent pattern). Which of these strategies would be quickest for the class to use when determining the correct number of toothpicks in the 4257th figure?\nA) continuing the pattern with toothpicks\nB) creating and extending a table of values\nC) setting up an equation for this relationship\nD) drawing a graph using the given figures and extrapolating"
+    },
+    {
+      "id": "g9-q20",
+      "grade": 9,
+      "source": "EQAO Grade 9 November 2025",
+      "label": "AP",
+      "predicted": "TH",
+      "pass": false,
+      "reasoning": "The student must plan and sequence multiple steps: first calculate the distance in miles (5 × 1/8), then convert to metres using the given conversion factor, and finally compare to the answer choices.",
+      "key_signal": "Requires multiplying blocks by block length, then converting units using the hint, sequencing two distinct operations before selecting the closest answer.",
+      "question": "In a certain city, the length of one block is 1/8 of a mile. (Hint: 1 mile = 1609.3 m) Which option is closest to the distance a person walks, in metres, if the person walks 5 blocks?\nA) 201 m\nB) 625 m\nC) 1006 m\nD) 2575 m"
+    },
+    {
+      "id": "g9-q22",
+      "grade": 9,
+      "source": "EQAO Grade 9 November 2025",
+      "label": "AP",
+      "predicted": "TH",
+      "pass": false,
+      "reasoning": "The student must evaluate and reason about multiple financial strategies, comparing their logical outcomes to determine which options improve versus worsen a financial position.",
+      "key_signal": "The requirement to evaluate and compare four different financial options using reasoning about their consequences to select the two best choices.",
+      "question": "Select the TWO options that could best help a person improve their financial position.\nA) reducing non-essential spending\nB) choosing free activities instead of paying for activities\nC) borrowing money for a non-essential purchase from a high-interest lender\nD) buying everything on a credit card and paying only the minimum monthly payment"
+    },
+    {
+      "id": "g9-q23",
+      "grade": 9,
+      "source": "EQAO Grade 9 November 2025",
+      "label": "TH",
+      "predicted": "TH",
+      "pass": true,
+      "reasoning": "The student must calculate the total cost of each financing option (down payment plus monthly payments × months) and then compare the two totals to determine which is less and by how much — requiring planning and sequencing multiple operations across two separate cases.",
+      "key_signal": "Comparing two financing options by calculating totals for each and finding the difference.",
+      "question": "Joelle wants to purchase a laptop for $500. She compares two financing options:\nOption A: 10% down payment and a monthly payment of $20.63 for 2 years.\nOption B: 0% down payment and a monthly payment of $15.56 for 3 years.\nWhich statement is correct?\nA) Option A costs $5.07 less than Option B.\nB) Option B costs $5.07 less than Option A.\nC) Option A costs $15.04 less than Option B.\nD) Option B costs $15.04 less than Option A."
+    }
+  ]
+}

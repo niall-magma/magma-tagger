@@ -1,0 +1,466 @@
+{
+  "accuracy": "26.2",
+  "correct": 11,
+  "total": 42,
+  "confusion": {
+    "KU": {
+      "KU": 7,
+      "AP": 2,
+      "TH": 0
+    },
+    "AP": {
+      "KU": 2,
+      "AP": 3,
+      "TH": 2
+    },
+    "TH": {
+      "KU": 2,
+      "AP": 3,
+      "TH": 1
+    }
+  },
+  "results": [
+    {
+      "id": "g3-q1",
+      "grade": 3,
+      "source": "EQAO Grade 3 November 2025",
+      "label": "KU",
+      "predicted": "KU",
+      "pass": true,
+      "reasoning": "The student is asked to recall and recognize the correct written form of a number with no real-world context or scenario.",
+      "key_signal": "No scenario, no named person — just identifying the correct word form of a number.",
+      "question": "Which option shows the correct way to write 35 in words?\nA) three-five\nB) thirty-five\nC) five-three\nD) fifty-three"
+    },
+    {
+      "id": "g3-q2",
+      "grade": 3,
+      "question": "From the numbers 299, 330, 305, 309, 311, 328 — select two numbers to place in order from least to greatest:\nLeast: ___ Greatest: ___",
+      "label": "AP",
+      "source": "EQAO Grade 3 November 2025",
+      "predicted": "ERROR",
+      "error": "Unexpected token '`', \"```json\n{\n\"... is not valid JSON",
+      "pass": false
+    },
+    {
+      "id": "g3-q3",
+      "grade": 3,
+      "source": "EQAO Grade 3 November 2025",
+      "label": "KU",
+      "predicted": "KU",
+      "pass": true,
+      "reasoning": "The student is executing a straightforward arithmetic procedure with no real-world context or scenario.",
+      "key_signal": "\"What is 95 + 19?\" — direct calculation with no context",
+      "question": "What is 95 + 19?\nA) 104\nB) 114\nC) 115\nD) 120"
+    },
+    {
+      "id": "g3-q4",
+      "grade": 3,
+      "source": "EQAO Grade 3 November 2025",
+      "label": "AP",
+      "predicted": "AP",
+      "pass": true,
+      "reasoning": "The question presents a real-world scenario with a named context (students in a gym) requiring the student to decide to use division and interpret the result.",
+      "key_signal": "Real-world scenario: 'There are 15 students in the gym. The teacher puts the students into groups of 3.'",
+      "question": "There are 15 students in the gym. The teacher puts the students into groups of 3. How many groups are there?\nA) 4 groups\nB) 5 groups\nC) 6 groups\nD) 12 groups"
+    },
+    {
+      "id": "g3-q5",
+      "grade": 3,
+      "source": "EQAO Grade 3 November 2025",
+      "label": "TH",
+      "predicted": "AP",
+      "pass": false,
+      "reasoning": "The question presents a real-world scenario with named persons (Raven and Mario), requiring the student to decide to multiply then subtract to find the difference.",
+      "key_signal": "Named persons Raven and Mario in a real-world scenario requiring interpretation and multi-step calculation.",
+      "question": "Raven has 5 groups of tiles with 6 tiles in each group. Mario has 2 groups of tiles with 8 tiles in each group. How many more tiles in total does Raven have than Mario?\nA) 10 tiles\nB) 14 tiles\nC) 16 tiles\nD) 30 tiles"
+    },
+    {
+      "id": "g3-q7",
+      "grade": 3,
+      "source": "EQAO Grade 3 November 2025",
+      "label": "TH",
+      "predicted": "KU",
+      "pass": false,
+      "reasoning": "The student must identify a numeric pattern rule by executing a procedure (finding the common difference) with no real-world context.",
+      "key_signal": "\"What is the pattern rule\" with a purely numeric sequence and no scenario.",
+      "question": "What is the pattern rule for this pattern?\n17, __ , __ , 29, __ , __ , __ , 45, ...\nA) +4\nB) +6\nC) +12\nD) +16"
+    },
+    {
+      "id": "g3-q8",
+      "grade": 3,
+      "source": "EQAO Grade 3 November 2025",
+      "label": "KU",
+      "predicted": "KU",
+      "pass": true,
+      "reasoning": "The student is recalling a multiplication fact and identifying an equivalent expression with no real-world context.",
+      "key_signal": "No scenario or context; purely procedural recall of what 2 × 8 equals.",
+      "question": "Which expression is equal to 2 × 8?\nA) 8 + 2\nB) 2 + 8\nC) 2 + 2 + 2 + 2\nD) 8 + 8"
+    },
+    {
+      "id": "g3-q9",
+      "grade": 3,
+      "question": "Select the correct operation (+, −, ×, or ÷) to fill in each blank so that both sides are equal:\n20 ÷ 4 = 1 ___ 5\n16 − 8 = 6 ___ 2\n2 × 3 = 30 ___ 5",
+      "label": "TH",
+      "source": "EQAO Grade 3 November 2025",
+      "predicted": "ERROR",
+      "error": "Unexpected token '`', \"```json\n{\n\"... is not valid JSON",
+      "pass": false
+    },
+    {
+      "id": "g3-q10",
+      "grade": 3,
+      "question": "A line of code is used to add 5 to a number 3 times. What line of code could be used to create a loop to 'add 5 to number' 3 times?\nA) repeat 5 times / add 3 to number\nB) forever / add 5 to number\nC) repeat 5 times / add 2 to number\nD) repeat 3 times / add 5 to number",
+      "label": "AP",
+      "source": "EQAO Grade 3 November 2025",
+      "predicted": "ERROR",
+      "error": "Unexpected token '`', \"```json\n{\n\"... is not valid JSON",
+      "pass": false
+    },
+    {
+      "id": "g3-q11",
+      "grade": 3,
+      "question": "This table shows the total number of students at four different schools:\nGreen Valley School: 240\nElmhurst School: 310\nOak View School: 204\nLinkshore School: 301\nWhich statement is true?\nA) Linkshore School has the most students\nB) Green Valley School has the fewest students\nC) Linkshore School has fewer students than Oak View School\nD) Elmhurst School has more students than Oak View School",
+      "label": "KU",
+      "source": "EQAO Grade 3 November 2025",
+      "predicted": "ERROR",
+      "error": "Unexpected token '`', \"```json\n{\n\"... is not valid JSON",
+      "pass": false
+    },
+    {
+      "id": "g3-q14",
+      "grade": 3,
+      "source": "EQAO Grade 3 November 2025",
+      "label": "KU",
+      "predicted": "AP",
+      "pass": false,
+      "reasoning": "The student must interpret real-world objects (a can of soup and a tissue box) and match them to their corresponding three-dimensional geometric shapes.",
+      "key_signal": "Real-world objects 'a can of soup' and 'a tissue box' are named in the scenario.",
+      "question": "What three-dimensional objects are the same as a can of soup and a tissue box?\nA) a cylinder and a prism\nB) a cone and a prism\nC) a pyramid and a cylinder\nD) a cube and a pyramid"
+    },
+    {
+      "id": "g3-q15",
+      "grade": 3,
+      "source": "EQAO Grade 3 November 2025",
+      "label": "AP",
+      "predicted": "KU",
+      "pass": false,
+      "reasoning": "The student recalls a geometric fact about pyramids — that a pyramid with 5 triangular faces has a pentagonal base — with no real-world context or scenario.",
+      "key_signal": "No real-world scenario; the question asks about a geometric property directly.",
+      "question": "A pyramid has 5 faces that are triangles. What shape is the base of the pyramid?\nA) square\nB) triangle\nC) hexagon\nD) pentagon"
+    },
+    {
+      "id": "g3-q16",
+      "grade": 3,
+      "source": "EQAO Grade 3 November 2025",
+      "label": "AP",
+      "predicted": "AP",
+      "pass": true,
+      "reasoning": "The student must interpret a real-world scenario involving pails of sand, decide to apply a multiplicative relationship, and execute the calculation to find the answer.",
+      "key_signal": "Real-world scenario with named objects (large orange pail, small blue pails) requiring the student to apply a ratio to find a quantity.",
+      "question": "One large orange pail holds the same amount of sand as two small blue pails. How many small pails of sand are needed to fill 8 large pails?\nA) 2 small pails\nB) 8 small pails\nC) 10 small pails\nD) 16 small pails"
+    },
+    {
+      "id": "g3-q18",
+      "grade": 3,
+      "source": "EQAO Grade 3 November 2025",
+      "label": "AP",
+      "predicted": "AP",
+      "pass": true,
+      "reasoning": "The student interprets a real-world purchasing scenario (cost and payment amounts) and applies subtraction to determine the correct change, which involves a practical context.",
+      "key_signal": "Real-world context of purchases, costs, and payment amounts requiring interpretation of a scenario.",
+      "question": "Calculate the correct change for each of these three purchases:\nCost: $41, Payment: $50, Change: ___\nCost: $13, Payment: $20, Change: ___\nCost: $2, Payment: $10, Change: ___"
+    },
+    {
+      "id": "g3-q19",
+      "grade": 3,
+      "source": "EQAO Grade 3 November 2025",
+      "label": "TH",
+      "predicted": "AP",
+      "pass": false,
+      "reasoning": "The question presents a real-world shopping scenario where the student must decide to add the prices and subtract from the amount paid, then interpret the result as change.",
+      "key_signal": "Named role (teacher) in a real-world purchasing scenario with 'How much change should the teacher receive?'",
+      "question": "A teacher buys a calculator for $14 and a package of markers for $9. The teacher pays with two twenty-dollar bills. How much change should the teacher receive?"
+    },
+    {
+      "id": "g6-q1",
+      "grade": 6,
+      "source": "EQAO Grade 6 November 2025",
+      "label": "KU",
+      "predicted": "KU",
+      "pass": true,
+      "reasoning": "The student is executing a straightforward comparison of decimal numbers with no real-world context or scenario.",
+      "key_signal": "No context, no named person — just identifying which number falls between two given decimal values.",
+      "question": "Which number is between 2.354 and 2.456?\nA) 2.345\nB) 2.402\nC) 2.457\nD) 2.520"
+    },
+    {
+      "id": "g6-q3",
+      "grade": 6,
+      "source": "EQAO Grade 6 November 2025",
+      "label": "KU",
+      "predicted": "KU",
+      "pass": true,
+      "reasoning": "The student must recall the definition of a prime number and identify which values qualify, with no real-world context or scenario.",
+      "key_signal": "Select the TWO prime numbers — a direct recall/identification task with no context.",
+      "question": "Select the TWO prime numbers.\nA) 11\nB) 21\nC) 24\nD) 42\nE) 43"
+    },
+    {
+      "id": "g6-q4",
+      "grade": 6,
+      "question": "A jar contains 200 marbles, and 5% of the marbles are blue. How many marbles are blue?\nA) 5 marbles\nB) 10 marbles\nC) 20 marbles\nD) 25 marbles",
+      "label": "AP",
+      "source": "EQAO Grade 6 November 2025",
+      "predicted": "ERROR",
+      "error": "Unexpected token '`', \"```json\n{\n\"... is not valid JSON",
+      "pass": false
+    },
+    {
+      "id": "g6-q5",
+      "grade": 6,
+      "source": "EQAO Grade 6 November 2025",
+      "label": "TH",
+      "predicted": "AP",
+      "pass": false,
+      "reasoning": "The question presents a real-world scenario with named people (Lucas and Greg), requires the student to determine Lucas's rate first and then apply the 'twice as fast' relationship to find Greg's rate.",
+      "key_signal": "Named persons (Lucas and Greg) in a real-world typing scenario requiring rate calculation and interpretation.",
+      "question": "Lucas types 360 words in 12 minutes. Greg types twice as fast as Lucas. How many words per minute does Greg type?\nA) 15 words per minute\nB) 30 words per minute\nC) 60 words per minute\nD) 180 words per minute"
+    },
+    {
+      "id": "g6-q6",
+      "grade": 6,
+      "source": "EQAO Grade 6 November 2025",
+      "label": "AP",
+      "predicted": "TH",
+      "pass": false,
+      "reasoning": "The student must work backwards from a given result (term value 27) to find the corresponding term number, which requires reasoning about the pattern rather than simply executing a forward procedure.",
+      "key_signal": "Result is given (term value = 27) and student must find the term number — classic working-backwards task.",
+      "question": "Four term values of a growing pattern are shown:\nTerm number: 5, 7, 9, ___\nTerm value:   11, 15, 19, 27\nWhat is the term number when the term value is 27?\nA) 11\nB) 13\nC) 15\nD) 23"
+    },
+    {
+      "id": "g6-q7",
+      "grade": 6,
+      "question": "This table shows a starting number and a rule for three patterns:\nPattern P: starting number = 1, rule = Add 5\nPattern Q: starting number = 66, rule = Subtract 10\nPattern R: starting number = 4, rule = Multiply by 2\nWhich number is in all three patterns?\nA) 8\nB) 16\nC) 26\nD) 36",
+      "label": "TH",
+      "source": "EQAO Grade 6 November 2025",
+      "predicted": "ERROR",
+      "error": "Unexpected token '`', \"```json\n{\n\"... is not valid JSON",
+      "pass": false
+    },
+    {
+      "id": "g6-q8",
+      "grade": 6,
+      "source": "EQAO Grade 6 November 2025",
+      "label": "KU",
+      "predicted": "KU",
+      "pass": true,
+      "reasoning": "The student is executing a direct algebraic procedure (solving for x) with no real-world context.",
+      "key_signal": "No scenario or context — purely symbolic equation to solve.",
+      "question": "What value of x makes this equation true?\n7x = 28\nA) 3\nB) 4\nC) 21\nD) 35"
+    },
+    {
+      "id": "g6-q9",
+      "grade": 6,
+      "source": "EQAO Grade 6 November 2025",
+      "label": "TH",
+      "predicted": "KU",
+      "pass": false,
+      "reasoning": "The student solves four algebraic equations and compares the resulting values of p, with no real-world context or named scenario.",
+      "key_signal": "Pure symbolic equations with no scenario, asking which yields the greatest value of p.",
+      "question": "In which equation does p have the greatest value?\nA) 85 + p = 125\nB) 70 − p = 35\nC) 5p = 215\nD) 3p = 132"
+    },
+    {
+      "id": "g6-q11",
+      "grade": 6,
+      "question": "This table shows the number of bags of popcorn sold at an event during different times in a day:\n1:00–2:59: 120 bags\n3:00–4:59: 87 bags\n5:00–6:59: 113 bags\nWhich option would best represent this data?\nA) histogram\nB) line plot\nC) pictograph\nD) multiple-bar graph",
+      "label": "KU",
+      "source": "EQAO Grade 6 November 2025",
+      "predicted": "ERROR",
+      "error": "Unexpected token '`', \"```json\n{\n\"... is not valid JSON",
+      "pass": false
+    },
+    {
+      "id": "g6-q12",
+      "grade": 6,
+      "question": "The height in centimetres of various plants is shown: 16, 21, 21, 31, 32, 34, 41\nComplete each statement:\nThe range is ___ cm.\nThe median is ___ cm.\nThe mean is ___ cm.",
+      "label": "TH",
+      "source": "EQAO Grade 6 November 2025",
+      "predicted": "ERROR",
+      "error": "Unexpected token '`', \"```json\n{\n\"... is not valid JSON",
+      "pass": false
+    },
+    {
+      "id": "g6-q16",
+      "grade": 6,
+      "source": "EQAO Grade 6 November 2025",
+      "label": "AP",
+      "predicted": "KU",
+      "pass": false,
+      "reasoning": "The student executes a geometric procedure (converting an acute angle to a counterclockwise measurement) with no real-world context or scenario.",
+      "key_signal": "No real-world scenario, named person, or claim to evaluate — purely a geometric calculation using given angle information.",
+      "question": "The acute angle between Line A and Line B is 48°. What is the angle when measuring counterclockwise from Line A to Line B?\nA) 42°\nB) 132°\nC) 222°\nD) 312°"
+    },
+    {
+      "id": "g6-q18",
+      "grade": 6,
+      "source": "EQAO Grade 6 November 2025",
+      "label": "KU",
+      "predicted": "KU",
+      "pass": true,
+      "reasoning": "The student is recalling a fact about financial instruments with no real-world scenario or calculation involved.",
+      "key_signal": "The question asks which payment method 'has' a property (high interest rate), requiring only factual recall.",
+      "question": "Which method of payment often has a high interest rate on unpaid balances?\nA) cash\nB) e-transfer\nC) debit card\nD) credit card"
+    },
+    {
+      "id": "g9-q1",
+      "grade": 9,
+      "question": "Five numbers are shown: 3/4, -1/3, √3, 6.4, -5.3\nSelect the TWO subsets of the number system that all of these numbers belong to.\nA) the set of integers\nB) the set of irrational numbers\nC) the set of rational numbers\nD) the set of real numbers",
+      "label": "KU",
+      "source": "EQAO Grade 9 November 2025",
+      "predicted": "ERROR",
+      "error": "Unexpected token '`', \"```json\n{\n\"... is not valid JSON",
+      "pass": false
+    },
+    {
+      "id": "g9-q2",
+      "grade": 9,
+      "question": "On a number line from 0 to 50, the perfect squares are: 1, 4, 9, 16, 25, 36, 49. Select the statement that correctly compares the density of the set of positive integers between 0 and 50 and the set of perfect squares between 0 and 50.\nA) Both sets are equally dense.\nB) Both sets are equally dense and contain infinitely many numbers.\nC) The set of positive integers is more dense than the set of perfect squares.\nD) The set of positive integers is less dense than the set of perfect squares.",
+      "label": "TH",
+      "source": "EQAO Grade 9 November 2025",
+      "predicted": "ERROR",
+      "error": "Unexpected token '`', \"```json\n{\n\"... is not valid JSON",
+      "pass": false
+    },
+    {
+      "id": "g9-q3",
+      "grade": 9,
+      "question": "What is the simplified form of this expression?\n−36a⁴b⁶ ÷ (−4ab²)\nA) 9a³b⁴\nB) 9a⁴b⁴\nC) −9a³b⁴\nD) −9a⁴b⁴",
+      "label": "KU",
+      "source": "EQAO Grade 9 November 2025",
+      "predicted": "ERROR",
+      "error": "Unexpected token '`', \"```json\n{\n\"... is not valid JSON",
+      "pass": false
+    },
+    {
+      "id": "g9-q4",
+      "grade": 9,
+      "question": "What is the value of this expression in scientific notation?\n(5⁴ × 5⁴ × 5⁻²) ÷ (5³ × 5⁻⁶)\nA) 5 × 10³\nB) 1.25 × 10²\nC) 1.953125 × 10⁶\nD) 1.6384 × 10⁻¹⁰",
+      "label": "AP",
+      "source": "EQAO Grade 9 November 2025",
+      "predicted": "ERROR",
+      "error": "Unexpected token '`', \"```json\n{\n\"... is not valid JSON",
+      "pass": false
+    },
+    {
+      "id": "g9-q5",
+      "grade": 9,
+      "question": "What is the value of this expression?\n3 2/3 + 2 3/5\nA) 5 5/8\nB) 5 11/15\nC) 6 4/15\nD) 7 3/5",
+      "label": "KU",
+      "source": "EQAO Grade 9 November 2025",
+      "predicted": "ERROR",
+      "error": "Unexpected token '`', \"```json\n{\n\"... is not valid JSON",
+      "pass": false
+    },
+    {
+      "id": "g9-q6",
+      "grade": 9,
+      "question": "A student moves in a straight line: 62m to the right, then 41m to the left, then 88m to the right, then 112m to the left. At his final position, where is the student in relation to his initial position?\nA) 3m to the right\nB) 3m to the left\nC) 303m to the right\nD) 303m to the left",
+      "label": "AP",
+      "source": "EQAO Grade 9 November 2025",
+      "predicted": "ERROR",
+      "error": "Unexpected token '`', \"```json\n{\n\"... is not valid JSON",
+      "pass": false
+    },
+    {
+      "id": "g9-q7",
+      "grade": 9,
+      "source": "EQAO Grade 9 November 2025",
+      "label": "KU",
+      "predicted": "AP",
+      "pass": false,
+      "reasoning": "A named person (Mia) has a real-world scenario involving pay, and the student must substitute a value into the equation and interpret the result in context.",
+      "key_signal": "Named person 'Mia' with a real-world pay scenario asking 'What is Mia's pay for making 8 birdhouses?'",
+      "question": "Mia calculates the pay she earns, P, in dollars, to make n birdhouses, according to this equation:\nP = 24.50n + 15\nWhat is Mia's pay for making 8 birdhouses?\nA) $39.50\nB) $181.00\nC) $196.00\nD) $211.00"
+    },
+    {
+      "id": "g9-q9",
+      "grade": 9,
+      "source": "EQAO Grade 9 November 2025",
+      "label": "AP",
+      "predicted": "TH",
+      "pass": false,
+      "reasoning": "The student is given a result (output of 60 cm) and must work backwards to find the missing input value.",
+      "key_signal": "The output (60 cm) is given and the student must determine the missing length input that produces it.",
+      "question": "This pseudocode calculates and outputs the perimeter of a rectangle:\nperimeter = 2 * width + 2 * length\nIf a user inputs 21 as the width and ___ as the length, the output will be 60 cm.\nA) 9\nB) 18\nC) 39\nD) 162"
+    },
+    {
+      "id": "g9-q10",
+      "grade": 9,
+      "question": "Pierre writes code to calculate the total price of an item after a sale discount. He defines:\n• itemPrice = the initial price of the item\n• percentDiscount = the sale discount in percent\nHe wants a variable 'subtotal' to represent the sale price before taxes. Select the correct line of code:\nA) subtotal = itemPrice * (percentDiscount/100)\nB) subtotal = itemPrice − (percentDiscount/100)\nC) subtotal = itemPrice + (itemPrice * percentDiscount/100)\nD) subtotal = itemPrice − (itemPrice * percentDiscount/100)",
+      "label": "TH",
+      "source": "EQAO Grade 9 November 2025",
+      "predicted": "ERROR",
+      "error": "Unexpected token '`', \"```json\n{\n\"... is not valid JSON",
+      "pass": false
+    },
+    {
+      "id": "g9-q13",
+      "grade": 9,
+      "question": "Three of these options show a linear relationship between T and g. Select the relationship that is NON-linear.\nA) T = 2g + 3\nB) Table: g=0→T=1, g=1→T=2, g=2→T=4, g=3→T=8\nC) Table: g=0→T=7, g=1→T=5, g=2→T=3, g=3→T=1\nD) T = 12 − 4g",
+      "label": "KU",
+      "source": "EQAO Grade 9 November 2025",
+      "predicted": "ERROR",
+      "error": "Unexpected token '`', \"```json\n{\n\"... is not valid JSON",
+      "pass": false
+    },
+    {
+      "id": "g9-q14",
+      "grade": 9,
+      "question": "A line is represented by the equation y = 6x. The slope doubles, and the y-intercept decreases by 5. What is the equation of the new line?\nA) y = 12x + 5\nB) y = 12x − 5\nC) y = 8x + 5\nD) y = 8x − 5",
+      "label": "AP",
+      "source": "EQAO Grade 9 November 2025",
+      "predicted": "ERROR",
+      "error": "Unexpected token '`', \"```json\n{\n\"... is not valid JSON",
+      "pass": false
+    },
+    {
+      "id": "g9-q18",
+      "grade": 9,
+      "question": "A class creates a growing pattern using toothpicks (Figure 1, Figure 2, Figure 3, each figure adds toothpicks in a consistent pattern). Which of these strategies would be quickest for the class to use when determining the correct number of toothpicks in the 4257th figure?\nA) continuing the pattern with toothpicks\nB) creating and extending a table of values\nC) setting up an equation for this relationship\nD) drawing a graph using the given figures and extrapolating",
+      "label": "AP",
+      "source": "EQAO Grade 9 November 2025",
+      "predicted": "ERROR",
+      "error": "Unexpected token '`', \"```json\n{\n\"... is not valid JSON",
+      "pass": false
+    },
+    {
+      "id": "g9-q20",
+      "grade": 9,
+      "question": "In a certain city, the length of one block is 1/8 of a mile. (Hint: 1 mile = 1609.3 m) Which option is closest to the distance a person walks, in metres, if the person walks 5 blocks?\nA) 201 m\nB) 625 m\nC) 1006 m\nD) 2575 m",
+      "label": "AP",
+      "source": "EQAO Grade 9 November 2025",
+      "predicted": "ERROR",
+      "error": "Unexpected token '`', \"```json\n{\n\"... is not valid JSON",
+      "pass": false
+    },
+    {
+      "id": "g9-q22",
+      "grade": 9,
+      "question": "Select the TWO options that could best help a person improve their financial position.\nA) reducing non-essential spending\nB) choosing free activities instead of paying for activities\nC) borrowing money for a non-essential purchase from a high-interest lender\nD) buying everything on a credit card and paying only the minimum monthly payment",
+      "label": "AP",
+      "source": "EQAO Grade 9 November 2025",
+      "predicted": "ERROR",
+      "error": "Unexpected token '`', \"```json\n{\n\"... is not valid JSON",
+      "pass": false
+    },
+    {
+      "id": "g9-q23",
+      "grade": 9,
+      "source": "EQAO Grade 9 November 2025",
+      "label": "TH",
+      "predicted": "TH",
+      "pass": true,
+      "reasoning": "The student must calculate the total cost of each financing option and then evaluate which comparative statement is correct, which involves working backwards to verify a claim rather than simply producing a value.",
+      "key_signal": "Which statement is correct? — the student evaluates competing claims about the total costs of two financing options.",
+      "question": "Joelle wants to purchase a laptop for $500. She compares two financing options:\nOption A: 10% down payment and a monthly payment of $20.63 for 2 years.\nOption B: 0% down payment and a monthly payment of $15.56 for 3 years.\nWhich statement is correct?\nA) Option A costs $5.07 less than Option B.\nB) Option B costs $5.07 less than Option A.\nC) Option A costs $15.04 less than Option B.\nD) Option B costs $15.04 less than Option A."
+    }
+  ]
+}
