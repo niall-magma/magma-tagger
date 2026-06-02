@@ -6,38 +6,66 @@ import 'dotenv/config';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 
-const TAGGING_GUIDE = `
-## The three tags
+const SYSTEM_PROMPT = `You are an expert classifier for Ontario's EQAO mathematics assessment framework. Classify each question as KU, AP, or TH using EQAO's official definitions below.
 
-| Tag | What the student does |
-|-----|-----------------------|
-| KU  | Recalls a fact, names a property, or executes a procedure directly with NO real-world context |
-| AP  | Reads a real-world scenario, decides which skill applies, executes it, interprets the result |
-| TH  | Evaluates a claim, spots an error, works backwards from a result, or compares two methods |
+## Official EQAO definitions
 
-## Decision test (apply in order)
-1. Does the student produce a value or execute a procedure with NO context? → KU
-2. Does the student interpret a scenario, decide what to do, then execute? → AP
-3. Does the student evaluate a claim, explain a result, or reason about a method? → TH
+**KU — Knowledge and Understanding**
+The student must demonstrate subject-specific content (knowledge) and/or comprehension of its meaning (understanding).
+- The procedure or formula is directly given, or the student simply recalls a fact/definition and applies it once.
+- A single known operation is executed with no ambiguity about which operation to use.
+- Even if a named person or scenario appears, if the formula is provided and the student just substitutes, it is still KU.
+- Examples: direct arithmetic (95 + 19), solving one equation (7x = 28), simplifying an expression with given rules, identifying which subset numbers belong to, identifying a shape by its properties, reading a table and comparing values directly.
 
-## Key distinctions
-- KU vs AP: if there is ANY real-world scenario or named person, it is at least AP
-- AP vs TH: AP produces a value; TH evaluates one
-- Working backwards (result given, find the start) → TH
-- Comparing two methods or answers → TH
-- Rule is given in the stem and student just executes → KU (not AP)
+**AP — Application**
+The student must EITHER:
+(a) Select the appropriate tool (decide which operation, formula, or approach to use — it is NOT given), OR
+(b) Get the necessary information and "fit" it to the problem.
+- A context (word problem, scenario) is typically present, but the distinguishing feature is that the student decides what to do.
+- Produces one result using one selected method.
+- A question moves from KU to AP when context is added OR when the tool is not provided.
+- Examples: word problems where the student chooses which operation(s) to apply, coding questions where the student selects the right construct, geometric questions where the student decides which property to apply, unit conversion questions, selecting the best strategy for a single-step task.
 
-## Signal phrases
-- KU: "What is...", "Which symbol...", "Calculate..." (no scenario), rule given in stem
-- AP: named person in scenario, "How many / how much...", real-world object described
-- TH: "[Name] says... Is she correct?", "Which correctly explains...", result given and student works back
-`;
+**TH — Thinking**
+The student must EITHER:
+(a) Select AND SEQUENCE a variety of tools (multi-step plan required), OR
+(b) Demonstrate a critical thinking process such as reasoning, comparing, evaluating, or justifying.
+- Multi-step problems where the student must plan two or more different operations in sequence → TH.
+- Comparing multiple results (e.g., solve 4 equations and pick the greatest) → TH.
+- Finding a pattern rule by reasoning (not just extending a rule already given) → TH.
+- Evaluating which code/formula/method is correct by reasoning about the logic → TH.
+- Calculating multiple statistics (range, median, mean) from one dataset → TH.
+- Note: TH is NOT limited to "error spotting" or "Is she correct?" frames. Any question requiring a plan or sequencing counts.
 
-const SYSTEM_PROMPT = `You are an expert in Ontario's EQAO assessment framework. Classify math questions as KU, AP, or TH using the guide below.
+## Critical distinctions
 
-${TAGGING_GUIDE}
+**KU vs AP:**
+- Is the procedure/formula/rule explicitly given? → KU (even with a named person or scenario)
+- Must the student select which procedure/rule to apply? → AP
+- Recognising a definition or classification (non-linear vs linear, which graph type) → KU
+- Applying a geometric/numeric property to a specific situation (pyramid faces → base shape) → AP
+- Multi-step unit conversions or exponent simplification where the student selects which laws to use → AP
 
-Respond with valid JSON only — no markdown, no extra text:
+**AP vs TH:**
+- Two-step or multi-step problems are NOT automatically TH. If the steps flow naturally once the method is selected, it is AP.
+- AP: net displacement from sequential movements; modify an equation per given instructions; unit conversion; selecting the best strategy from options; choosing financial tools that improve a position.
+- TH requires either: (a) genuinely non-obvious multi-step planning where the operations are not immediately clear, OR (b) computing multiple separate results and then comparing them.
+
+**Common TH patterns:**
+- "How many MORE / FEWER" when it requires two completely different operations (e.g. multiply for each person, then subtract — three distinct steps)
+- Finding the pattern rule itself from data where no rule is given (requires reasoning, not execution)
+- "Which equation gives the greatest value?" — solve several equations separately and compare results
+- Evaluating which code/formula is mathematically correct by reasoning about the logic
+- Calculating range AND median AND mean from one dataset (three different statistical procedures)
+- Comparing two multi-step options (e.g. calculate total cost of Option A and Option B, then compare)
+- Reasoning about abstract mathematical properties (density of number sets, justifying a relationship)
+
+**NOT TH (these are AP):**
+- Multi-step problems where each step follows naturally once the method is chosen (net displacement, unit conversion, modifying an equation per explicit instructions, selecting a strategy)
+- "Select TWO options" questions where the student applies knowledge to a real-world scenario
+- Finding a missing term in a pattern table (select the rule and apply it)
+
+Respond with valid JSON only — no markdown fences, no extra text:
 {
   "tag": "KU" | "AP" | "TH",
   "reasoning": "One sentence explaining the classification",
@@ -52,7 +80,8 @@ async function classifyQuestion(client, question) {
     messages: [{ role: 'user', content: question }],
   });
 
-  const text = response.content[0].text.trim();
+  const raw = response.content[0].text.trim();
+  const text = raw.replace(/^```(?:json)?\s*/i, '').replace(/\s*```$/, '');
   return JSON.parse(text);
 }
 
@@ -108,6 +137,8 @@ async function runEvals() {
 
     results.push({
       id: item.id,
+      grade: item.grade,
+      source: item.source,
       label: item.label,
       predicted: result.tag,
       pass,
