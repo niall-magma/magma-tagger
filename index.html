@@ -587,15 +587,15 @@
     <div class="tag-legend">
       <div class="legend-item">
         <div class="legend-dot" style="background:var(--ku-border)"></div>
-        <p><strong>KU</strong> — Recall a fact or execute a procedure directly. No scenario, no decision.</p>
+        <p><strong>KU</strong> — Recall a fact or execute a given procedure. The method is provided; student just applies it.</p>
       </div>
       <div class="legend-item">
         <div class="legend-dot" style="background:var(--ap-border)"></div>
-        <p><strong>AP</strong> — Apply a skill in a real-world Ontario context. Student decides what to do.</p>
+        <p><strong>AP</strong> — Select which tool or method to use, then apply it. Context may or may not be present.</p>
       </div>
       <div class="legend-item">
         <div class="legend-dot" style="background:var(--th-border)"></div>
-        <p><strong>TH</strong> — Evaluate a claim, spot an error, or reason about a method.</p>
+        <p><strong>TH</strong> — Plan and sequence multiple tools, or reason and compare across several cases.</p>
       </div>
     </div>
   </div>
@@ -657,17 +657,22 @@
 <footer>MagmaTag · MagmaMath Ontario Curriculum Tool · Powered by Claude (Anthropic)</footer>
 
 <script>
-const SYSTEM = `You are an expert in Ontario curriculum mathematics assessment. Classify questions as KU, AP, or TH.
+const SYSTEM = `You are an expert in Ontario's EQAO mathematics assessment framework. Classify questions as KU, AP, or TH using the official definitions below.
 
-TAG 1 KU (Knowledge & Understanding): Student recalls a fact, names a property, or executes a procedure in a direct context-free way. No scenario. No decision-making. "What is 7×5?" is KU.
+KU (Knowledge & Understanding): The procedure or formula is directly given, or the student recalls a single fact/definition and applies it once. Even with a named person or scenario, if the method is provided and the student just substitutes or executes, it is KU. Examples: direct arithmetic, solving one equation, simplifying with given rules, identifying a shape by its properties, reading a table and comparing values directly.
 
-TAG 2 AP (Application): Student interprets a real-world Ontario scenario, decides which skill is needed, applies it. The context forces a decision — it is not decorative. Uses Ontario names (Amara, Kofi, Priya, Dawit), metric units, Canadian currency.
+AP (Application): The student must select which tool, method, or operation to use — it is not given. This includes: word problems where the student decides the operation; selecting the right strategy or construct; applying a geometric or algebraic property to a specific situation; unit conversions; ordering/selecting values to fit positions; real-world scenarios (even thin ones like calculating change). Two-step problems where each step flows naturally once the method is chosen are AP, not TH.
 
-TAG 3 TH (Thinking): Student evaluates a claim, spots an error, explains a result, or reasons about a method. Stems often say "Dawit says... is he correct?" or "which response correctly explains..."
+TH (Thinking): The student must either (a) plan and sequence genuinely non-obvious multiple different operations, OR (b) compute several separate results and compare them. Examples: "how many more" requiring multiply-then-subtract; finding a pattern rule from data when no rule is given; solving multiple equations to find the greatest value; evaluating which formula/code is mathematically correct; calculating range AND median AND mean; comparing two multi-step options; reasoning about abstract mathematical properties.
 
-The simplest test: produces value/executes procedure with no context? → KU. Interprets scenario, decides, executes? → AP. Evaluates claim, explains, reasons? → TH.
+Critical distinctions:
+- Named person + formula given → KU (not AP)
+- Two steps that flow naturally → AP (not TH)
+- Must compare results across multiple separate calculations → TH
+- Selecting best strategy/option from a list using knowledge → AP (not TH)
+- Recognising a definition or classification (e.g. which graph type, linear vs non-linear) → KU
 
-KU/AP/TH are NOT difficulty levels.`;
+KU/AP/TH are cognitive types, NOT difficulty levels.`;
 
 const CONVERT_GUIDANCE = {
   'KU->AP': 'Add a realistic Ontario context using diverse names (Amara, Kofi, Priya, Dawit, Selin, Yuki) and metric units. The context must force the student to decide what operation to use — not just a name wrapper around the same calculation.',

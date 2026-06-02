@@ -64,6 +64,12 @@ The student must EITHER:
 - Multi-step problems where each step follows naturally once the method is chosen (net displacement, unit conversion, modifying an equation per explicit instructions, selecting a strategy)
 - "Select TWO options" questions where the student applies knowledge to a real-world scenario
 - Finding a missing term in a pattern table (select the rule and apply it)
+- Two-step unit conversions (e.g. blocks → miles → metres) — once you decide to multiply and convert, the steps flow naturally → AP
+
+**NOT KU (these are AP):**
+- Selecting or ordering values from a set to fill positions (e.g. "drag two numbers into boxes in order from least to greatest") — the student must decide which values fit, not just recall a fact → AP
+- Calculating change or cost in a real-world shopping/money scenario, even if the arithmetic itself is simple subtraction — the real-world context is what makes it AP
+- Any question where basic arithmetic is wrapped in a scenario requiring interpretation, even a thin one
 
 Respond with valid JSON only — no markdown fences, no extra text:
 {
